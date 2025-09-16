@@ -172,7 +172,13 @@
       greek:/\p{Script=Greek}/gu,
       hebr: /\p{Script=Hebrew}/gu
     };
-
+    function normalizePasted(text) {
+  return text
+    .replace(/\r\n?/g, '\n')   // CRLF→LF
+    .replace(/^\s*\n+/, '')    // 앞쪽 빈 줄 제거
+    .replace(/\n{3,}/g, '\n\n')// 3줄 이상 연속 빈 줄→2줄
+    .replace(/\s+$/g, '');     // 맨 아래 공백/빈 줄 제거
+}
     const i18n = {
       ui: {
         en:{title:'Character Counter',subtitle:'Paste text to analyze multilingual counts accurately.',paste:'Paste text',clear:'Clear',placeholder:'Type or paste your text…',hi1:'Accurate',hi1s:'Counts letters, words, digits, punctuation by script.',hi2:'Smart rules',hi2s:'Korean-dominant rule else unified rule.'},
@@ -317,24 +323,26 @@
     }
 
     async function pasteText() {
-      const el = document.getElementById('textInput');
-      try {
-        let clip = await navigator.clipboard.readText();
-        clip = clip.replace(/\r\n?/g, '\n').replace(/^\s*\n+/, '').replace(/\n{3,}/g, '\n\n').replace(/\s+$/g, '');
-        const start = el.selectionStart ?? el.value.length;
-        const end = el.selectionEnd ?? el.value.length;
-        el.value = el.value.slice(0, start) + clip + el.value.slice(end);
-      } catch {
-        const fallback = prompt('Paste is not allowed by the browser.\nPlease paste your content here:');
-        if (fallback !== null) {
-          const cleaned = fallback.replace(/\r\n?/g, '\n').replace(/^\s*\n+/, '').replace(/\n{3,}/g, '\n\n').replace(/\s+$/g, '');
-          el.value += (el.value ? '\n' : '') + cleaned;
-        }
-      }
-      el.scrollTop = 0;
-      showAdAfterPaste();
-      el.focus();
+  const el = document.getElementById('textInput');
+  try {
+    let clip = await navigator.clipboard.readText();
+    clip = normalizePasted(clip);
+    const start = el.selectionStart ?? el.value.length;
+    const end   = el.selectionEnd ?? el.value.length;
+    el.value = el.value.slice(0, start) + clip + el.value.slice(end);
+    const pos = start + clip.length;
+    el.setSelectionRange?.(pos, pos);
+  } catch {
+    const fallback = prompt('Paste is not allowed by the browser.\nPlease paste your content here:');
+    if (fallback !== null) {
+      const cleaned = normalizePasted(fallback);
+      el.value += (el.value ? '\n' : '') + cleaned;
     }
+  }
+  el.scrollTop = 0;
+  showAdAfterPaste(); // 팝업 후 집계
+  el.focus();
+}
 
     function clearText() {
       const el = document.getElementById('textInput');
@@ -366,6 +374,21 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      const ta = document.getElementById('textInput');
+  ta.addEventListener('paste', (e) => {
+    e.preventDefault(); // 브라우저 기본 붙여넣기 막고
+    const raw = (e.clipboardData || window.clipboardData)?.getData('text') || '';
+    const cleaned = normalizePasted(raw);
+    const start = ta.selectionStart ?? ta.value.length;
+    const end   = ta.selectionEnd ?? ta.value.length;
+    ta.value = ta.value.slice(0, start) + cleaned + ta.value.slice(end);
+    const pos = start + cleaned.length;
+    ta.setSelectionRange?.(pos, pos);
+    ta.scrollTop = 0;
+    showAdAfterPaste(); // 단축키 붙여넣기도 팝업
+    ta.focus();
+  }, { capture: true });
+      
       const sel = document.getElementById('lang');
       sel.innerHTML = ['en','ko','zh-CN','zh-TW','ja','th','vi','ru','ar','fr','de','es','pt'].map(code => {
         const label = ({en:'English',ko:'한국어','zh-CN':'中文(简体)','zh-TW':'中文(繁體)',ja:'日本語',th:'ภาษาไทย',vi:'Tiếng Việt',ru:'Русский',ar:'العربية',fr:'Français',de:'Deutsch',es:'Español',pt:'Português'})[code];
