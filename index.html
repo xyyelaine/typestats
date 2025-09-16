@@ -312,7 +312,7 @@
         const comp = [];
         for (const [k, v] of Object.entries(stats.counts)) if (v > 0) comp.push(localScriptName(k, stats.uiLang));
         if (stats.englishWords > 0) comp.push(englishLabel);
-        comp.push('Digits');
+        comp.push('L.Digits');
         totalLabel = `Total (${comp.join(' + ')}, no punctuation)`;
       }
 
@@ -320,8 +320,8 @@
         <div class="stats">
           ${scriptCards}
           <div class="card"><div class="label">${englishLabel}</div><div class="value">${stats.englishDisplay.toLocaleString()}</div></div>
-          <div class="card"><div class="label">Digits</div><div class="value">${stats.digits.toLocaleString()}</div></div>
-          <div class="card"><div class="label">Punctuation</div><div class="value">${stats.punct.toLocaleString()}</div></div>
+          <div class="card"><div class="label">${L.digits}</div><div class="value">${stats.digits.toLocaleString()}</div></div>
+          <div class="card"><div class="label">${L.punct}</div><div class="value">${stats.punct.toLocaleString()}</div></div>
           <div class="card"><div class="label">${totalLabel}</div><div class="value">${stats.total.toLocaleString()}</div></div>
         </div>
       `;
@@ -446,5 +446,6 @@
       }
     })();
   </script>
+<script defer src="/vercel/insights/script.js"></script>  
 </body>
 </html>
