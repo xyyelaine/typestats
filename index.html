@@ -38,8 +38,17 @@
     body {
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Apple SD Gothic Neo, sans-serif;
       color: var(--text);
-      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg1) 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
       display: flex; flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
     header {
       position: sticky; top: 0; z-index: 10;
@@ -55,13 +64,35 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      font-size: 1.4em;
-      font-weight: 800;
+      font-size: 1.2em;
+      font-weight: 700;
+      margin-left: 4px;
     }
     .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    select, button { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; }
-    button.primary { background: var(--accent); color: #fff; border-color: transparent; }
-    button:hover { filter: brightness(1.02); }
+    select, button { 
+      padding: 12px 16px; 
+      border-radius: 12px; 
+      border: 1px solid var(--border); 
+      background: var(--card); 
+      color: var(--text); 
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,.05);
+    }
+    button.primary { 
+      background: linear-gradient(135deg, var(--accent), var(--accent-2)); 
+      color: #fff; 
+      border-color: transparent;
+      box-shadow: 0 6px 20px rgba(37,99,235,.3);
+    }
+    button:hover { 
+      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(0,0,0,.15);
+    }
+    button.primary:hover {
+      box-shadow: 0 8px 25px rgba(37,99,235,.4);
+    }
     main { flex: 1; }
     .container { max-width: 1200px; margin: 24px auto; padding: 0 20px; }
 
@@ -73,19 +104,96 @@
 
     .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; align-items: center; margin-bottom: 16px; }
     @media (max-width: 960px) { .hero { grid-template-columns: 1fr; } }
-    .hero-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.06); }
-    .title { font-size: 22px; font-weight: 800; margin: 0 0 6px; }
-    .subtitle { color: var(--muted); margin: 0; }
+    .hero-card { 
+      background: var(--card); 
+      border: 1px solid var(--border); 
+      border-radius: 20px; 
+      padding: 24px; 
+      box-shadow: 0 20px 40px rgba(0,0,0,.08), 0 8px 16px rgba(0,0,0,.04);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .title { font-size: 24px; font-weight: 800; margin: 0 0 8px; }
+    .subtitle { color: var(--muted); margin: 0; line-height: 1.5; }
 
-    .panel { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+    .panel { 
+      background: var(--card); 
+      border: 1px solid var(--border); 
+      border-radius: 20px; 
+      padding: 24px; 
+      box-shadow: 0 20px 40px rgba(0,0,0,.08), 0 8px 16px rgba(0,0,0,.04);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
     .row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
-    textarea { width: 100%; min-height: 240px; resize: vertical; border: 1px solid var(--border); background: transparent; color: var(--text); border-radius: 12px; padding: 12px; font: inherit; line-height: 1.6; }
+    textarea { 
+      width: 100%; 
+      min-height: 240px; 
+      resize: vertical; 
+      border: 2px solid var(--border); 
+      background: var(--card); 
+      color: var(--text); 
+      border-radius: 16px; 
+      padding: 16px; 
+      font: inherit; 
+      line-height: 1.6;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,.05);
+    }
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.1), 0 8px 20px rgba(0,0,0,.1);
+    }
     .under-actions { display: flex; justify-content: flex-start; margin-top: 8px; gap: 8px; }
 
     .stats { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-    .card { padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
-    .label { color: var(--muted); font-size: .9em; }
-    .value { font-weight: 800; font-size: 1.25em; margin-top: 2px; }
+    .card { 
+      padding: 18px; 
+      border: 1px solid var(--border); 
+      border-radius: 16px; 
+      background: var(--card);
+      box-shadow: 0 8px 20px rgba(0,0,0,.06);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0,0,0,.1);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    .label { color: var(--muted); font-size: .9em; font-weight: 500; }
+    .value { font-weight: 800; font-size: 1.4em; margin-top: 4px; color: var(--accent); }
 
     footer { color: var(--muted); text-align: center; padding: 24px 12px; }
 
@@ -99,19 +207,22 @@
   <header>
     <div class="nav">
       <div class="brand">
-        <svg class="brand-logo" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
-          <!-- Document Icon -->
-          <rect x="2" y="4" width="16" height="20" rx="2" fill="#1e40af" stroke="#1e40af" stroke-width="0.5"/>
-          <rect x="4" y="6" width="12" height="1.5" fill="white" opacity="0.8"/>
-          <rect x="4" y="8.5" width="12" height="1.5" fill="white" opacity="0.8"/>
-          <rect x="4" y="11" width="12" height="1.5" fill="white" opacity="0.8"/>
-          <rect x="4" y="13.5" width="8" height="1.5" fill="white" opacity="0.6"/>
-          <rect x="4" y="16" width="10" height="1.5" fill="white" opacity="0.6"/>
-          <rect x="4" y="18.5" width="6" height="1.5" fill="white" opacity="0.4"/>
+        <svg class="brand-logo" viewBox="0 0 180 32" xmlns="http://www.w3.org/2000/svg">
+          <!-- Document Icon with folded corner -->
+          <rect x="2" y="3" width="18" height="24" rx="2" fill="#1e40af"/>
+          <path d="M16 3 L20 7 L16 7 Z" fill="#0f172a" opacity="0.3"/>
+          
+          <!-- Document lines -->
+          <rect x="5" y="7" width="10" height="1.2" fill="white" opacity="0.9"/>
+          <rect x="5" y="9.5" width="10" height="1.2" fill="white" opacity="0.9"/>
+          <rect x="5" y="12" width="10" height="1.2" fill="white" opacity="0.9"/>
+          <rect x="5" y="14.5" width="7" height="1.2" fill="white" opacity="0.7"/>
+          <rect x="5" y="17" width="9" height="1.2" fill="white" opacity="0.7"/>
+          <rect x="5" y="19.5" width="5" height="1.2" fill="white" opacity="0.5"/>
           
           <!-- TypeStats Text -->
-          <text x="24" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#1e40af">Type</text>
-          <text x="24" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="url(#gradient)">Stats</text>
+          <text x="26" y="12" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#1e40af">Type</text>
+          <text x="26" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="url(#gradient)">Stats</text>
           
           <!-- Gradient Definition -->
           <defs>
@@ -445,21 +556,51 @@
       };
     }
 
+    // Browser language detection
+    function detectBrowserLanguage() {
+      const browserLang = navigator.language || navigator.userLanguage || 'en';
+      const langCode = browserLang.split('-')[0]; // Get primary language code
+      
+      // Map browser languages to our supported languages
+      const langMap = {
+        'ko': 'ko',
+        'zh': 'zh-CN',
+        'ja': 'ja',
+        'th': 'th',
+        'vi': 'vi',
+        'ru': 'ru',
+        'ar': 'ar',
+        'fr': 'fr',
+        'de': 'de',
+        'es': 'es',
+        'pt': 'pt'
+      };
+      
+      return langMap[langCode] || 'en'; // Default to English if not supported
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       // Fill localized thank-you message in modal (optional simple EN/KR)
       const msg = {
         en: "Thanks for using our text counter. Close this message to see your results.",
         ko: "이용해 주셔서 감사합니다. 닫기를 누르면 결과를 확인할 수 있어요."
       };
-      const uiLang = 'en';
-      document.getElementById('adMessage').textContent = msg[uiLang];
-
+      
       const sel = document.getElementById('lang');
       sel.innerHTML = ['en','ko','zh-CN','zh-TW','ja','th','vi','ru','ar','fr','de','es','pt'].map(code => {
         const label = ({en:'English',ko:'한국어','zh-CN':'中文(简体)','zh-TW':'中文(繁體)',ja:'日本語',th:'ภาษาไทย',vi:'Tiếng Việt',ru:'Русский',ar:'العربية',fr:'Français',de:'Deutsch',es:'Español',pt:'Português'})[code];
         return `<option value="${code}">${label}</option>`;
       }).join('');
-      sel.value = 'en';
+      
+      // Set default language based on browser
+      const defaultLang = detectBrowserLanguage();
+      sel.value = defaultLang;
+      
+      // Initialize UI with detected language
+      setUILanguage(defaultLang);
+      document.getElementById('adMessage').textContent =
+        defaultLang === 'ko' ? msg.ko : msg.en;
+      
       sel.addEventListener('change', () => {
         setUILanguage(sel.value);
         document.getElementById('adMessage').textContent =
