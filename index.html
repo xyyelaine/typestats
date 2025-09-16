@@ -171,15 +171,15 @@
     }
     .under-actions { display: flex; justify-content: flex-start; margin-top: 12px; gap: 12px; }
     .clear-btn {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
+      background: linear-gradient(135deg, var(--muted), #64748b);
       color: white;
       border: none;
       font-weight: 600;
-      box-shadow: 0 4px 12px rgba(239,68,68,.3);
+      box-shadow: 0 4px 12px rgba(71,85,105,.3);
     }
     .clear-btn:hover {
-      background: linear-gradient(135deg, #dc2626, #b91c1c);
-      box-shadow: 0 6px 20px rgba(239,68,68,.4);
+      background: linear-gradient(135deg, #64748b, #475569);
+      box-shadow: 0 6px 20px rgba(71,85,105,.4);
     }
 
     .stats { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
@@ -372,19 +372,19 @@
         pt:{title:'Contador de caracteres',subtitle:'Cole o texto para análise multilíngue precisa.',paste:'Colar texto',clear:'Limpar',placeholder:'Digite ou cole o texto…',hi1:'Preciso',hi1s:'Conta letras, palavras, dígitos, pontuação por script.',hi2:'Regras inteligentes',hi2s:'Coreano dominante; caso contrário regra unificada.'}
       },
       labels: {
-        en:{scriptChars:n=>`${n} characters`,enLetters:'English letters',enWords:'English words',digits:'Digits',punct:'Punctuation',total:'Total (no spaces)'},
-        ko:{scriptChars:n=>`${n} 글자수`,enLetters:'영어 글자수',enWords:'영어 단어 수',digits:'숫자',punct:'문장부호',total:'전체 글자수 (공백 제외)'},
-        'zh-CN':{scriptChars:n=>`${n} 字符数`,enLetters:'英文字母数',enWords:'英文单词数',digits:'数字',punct:'标点符号',total:'总字符数（去空白）'},
-        'zh-TW':{scriptChars:n=>`${n} 字元數`,enLetters:'英文字母數',enWords:'英文單字數',digits:'數字',punct:'標點符號',total:'總字元數（去空白）'},
-        ja:{scriptChars:n=>`${n} 文字数`,enLetters:'英語の文字数',enWords:'英語の単語数',digits:'数字',punct:'句読点',total:'総文字数（空白除く）'},
-        th:{scriptChars:n=>`อักขระภาษา${n}`,enLetters:'ตัวอักษรอังกฤษ',enWords:'คำภาษาอังกฤษ',digits:'ตัวเลข',punct:'เครื่องหมายวรรคตอน',total:'รวม (ไม่รวมช่องว่าง)'},
-        vi:{scriptChars:n=>`Ký tự ${n}`,enLetters:'Chữ cái tiếng Anh',enWords:'Từ tiếng Anh',digits:'Chữ số',punct:'Dấu câu',total:'Tổng (không tính khoảng trắng)'},
-        ru:{scriptChars:n=>`Символы: ${n}`,enLetters:'Английские буквы',enWords:'Английские слова',digits:'Цифры',punct:'Знаки препинания',total:'Всего (без пробелов)'},
-        ar:{scriptChars:n=>`أحرف ${n}`,enLetters:'حروف إنجليزية',enWords:'كلمات إنجليزية',digits:'أرقام',punct:'علامات ترقيم',total:'الإجمالي (بدون مسافات)'},
-        fr:{scriptChars:n=>`${n} caractères`,enLetters:'Lettres anglaises',enWords:'Mots anglais',digits:'Chiffres',punct:'Ponctuation',total:'Total (sans espaces)'},
-        de:{scriptChars:n=>`${n} Zeichen`,enLetters:'Englische Buchstaben',enWords:'Englische Wörter',digits:'Ziffern',punct:'Zeichensetzung',total:'Gesamt (ohne Leerzeichen)'},
-        es:{scriptChars:n=>`${n} caracteres`,enLetters:'Letras en inglés',enWords:'Palabras en inglés',digits:'Dígitos',punct:'Puntuación',total:'Total (sin espacios)'},
-        pt:{scriptChars:n=>`${n} caracteres`,enLetters:'Letras em inglês',enWords:'Palavras em inglês',digits:'Dígitos',punct:'Pontuação',total:'Total (sem espaços)'}
+        en:{scriptChars:n=>`${n} characters`,enLetters:'English letters',enWords:'English words',digits:'Digits',punct:'Punctuation',total:'Total (no spaces)',noPunct:'no punctuation'},
+        ko:{scriptChars:n=>`${n} 글자수`,enLetters:'영어 글자수',enWords:'영어 단어 수',digits:'숫자',punct:'문장부호',total:'전체 글자수 (공백 제외)',noPunct:'문장부호 제외'},
+        'zh-CN':{scriptChars:n=>`${n} 字符数`,enLetters:'英文字母数',enWords:'英文单词数',digits:'数字',punct:'标点符号',total:'总字符数（去空白）',noPunct:'不含标点'},
+        'zh-TW':{scriptChars:n=>`${n} 字元數`,enLetters:'英文字母數',enWords:'英文單字數',digits:'數字',punct:'標點符號',total:'總字元數（去空白）',noPunct:'不含標點'},
+        ja:{scriptChars:n=>`${n} 文字数`,enLetters:'英語の文字数',enWords:'英語の単語数',digits:'数字',punct:'句読点',total:'総文字数（空白除く）',noPunct:'句読点除く'},
+        th:{scriptChars:n=>`อักขระภาษา${n}`,enLetters:'ตัวอักษรอังกฤษ',enWords:'คำภาษาอังกฤษ',digits:'ตัวเลข',punct:'เครื่องหมายวรรคตอน',total:'รวม (ไม่รวมช่องว่าง)',noPunct:'ไม่รวมเครื่องหมาย'},
+        vi:{scriptChars:n=>`Ký tự ${n}`,enLetters:'Chữ cái tiếng Anh',enWords:'Từ tiếng Anh',digits:'Chữ số',punct:'Dấu câu',total:'Tổng (không tính khoảng trắng)',noPunct:'không tính dấu câu'},
+        ru:{scriptChars:n=>`Символы: ${n}`,enLetters:'Английские буквы',enWords:'Английские слова',digits:'Цифры',punct:'Знаки препинания',total:'Всего (без пробелов)',noPunct:'без пунктуации'},
+        ar:{scriptChars:n=>`أحرف ${n}`,enLetters:'حروف إنجليزية',enWords:'كلمات إنجليزية',digits:'أرقام',punct:'علامات ترقيم',total:'الإجمالي (بدون مسافات)',noPunct:'بدون ترقيم'},
+        fr:{scriptChars:n=>`${n} caractères`,enLetters:'Lettres anglaises',enWords:'Mots anglais',digits:'Chiffres',punct:'Ponctuation',total:'Total (sans espaces)',noPunct:'sans ponctuation'},
+        de:{scriptChars:n=>`${n} Zeichen`,enLetters:'Englische Buchstaben',enWords:'Englische Wörter',digits:'Ziffern',punct:'Zeichensetzung',total:'Gesamt (ohne Leerzeichen)',noPunct:'ohne Interpunktion'},
+        es:{scriptChars:n=>`${n} caracteres`,enLetters:'Letras en inglés',enWords:'Palabras en inglés',digits:'Dígitos',punct:'Puntuación',total:'Total (sin espacios)',noPunct:'sin puntuación'},
+        pt:{scriptChars:n=>`${n} caracteres`,enLetters:'Letras em inglês',enWords:'Palavras em inglês',digits:'Dígitos',punct:'Pontuação',total:'Total (sem espaços)',noPunct:'sem pontuação'}
       },
       scripts: {
         en:{Korean:'Korean',Chinese:'Chinese',Japanese:'Japanese',Thai:'Thai',Arabic:'Arabic',Devanagari:'Hindi',Cyrillic:'Cyrillic',Greek:'Greek',Hebrew:'Hebrew'},
@@ -479,12 +479,13 @@
         }).join('');
 
       let totalLabel = L.total;
+      let totalSubtitle = '';
       if (stats.primary.key !== 'Korean') {
         const comp = [];
         for (const [k, v] of Object.entries(stats.counts)) if (v > 0) comp.push(localScriptName(k, stats.uiLang));
         if (stats.englishWords > 0) comp.push(englishLabel);
         comp.push(L.digits);
-        totalLabel = `Total (${comp.join(' + ')}, no punctuation)`;
+        totalSubtitle = `${comp.join(' + ')}, ${L.noPunct}`;
       }
 
       document.getElementById('result').innerHTML = `
@@ -493,7 +494,11 @@
           <div class="card"><div class="label">${englishLabel}</div><div class="value">${stats.englishDisplay.toLocaleString()}</div></div>
           <div class="card"><div class="label">${L.digits}</div><div class="value">${stats.digits.toLocaleString()}</div></div>
           <div class="card"><div class="label">${L.punct}</div><div class="value">${stats.punct.toLocaleString()}</div></div>
-          <div class="card"><div class="label">${totalLabel}</div><div class="value">${stats.total.toLocaleString()}</div></div>
+          <div class="card">
+            <div class="label">${totalLabel}</div>
+            <div class="value">${stats.total.toLocaleString()}</div>
+            ${totalSubtitle ? `<div class="subtitle" style="font-size:0.8em;color:var(--muted);margin-top:4px;">${totalSubtitle}</div>` : ''}
+          </div>
         </div>
       `;
     }
