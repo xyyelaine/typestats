@@ -4,7 +4,7 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8559690324489971"
      crossorigin="anonymous"></script>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net; connect-src 'self' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://ep1.adtrafficquality.google; frame-src 'self' https://googleads.g.doubleclick.net; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Character Counter</title>
   <!-- AdSense Auto Ads -->
@@ -43,6 +43,10 @@
       animation: gradientShift 15s ease infinite;
       display: flex; flex-direction: column;
       min-height: 100vh;
+      /* Mobile optimizations */
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     
     @keyframes gradientShift {
@@ -236,6 +240,73 @@
     .ad-wrap { width: min(720px, 92vw); background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden; }
     .ad-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
     .ad-body { padding: 22px; height: 320px; display: flex; align-items: center; justify-content: center; text-align: center; }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      .nav { padding: 12px 16px; flex-direction: column; gap: 16px; }
+      .brand { justify-content: center; }
+      .brand-logo { height: 28px; }
+      .controls { justify-content: center; }
+      
+      .container { padding: 16px; }
+      .hero { gap: 16px; }
+      .hero-card { padding: 20px; }
+      .title { font-size: 1.2em; }
+      .subtitle { font-size: 0.9em; }
+      
+      .hero-feature { padding: 16px; }
+      .hero-feature-title { font-size: 0.9em; }
+      .hero-feature-desc { font-size: 0.8em; }
+      
+      .panel { padding: 20px; }
+      .row { flex-direction: column; gap: 12px; }
+      .primary { padding: 14px 20px; font-size: 1em; }
+      
+      textarea { 
+        min-height: 200px; 
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 16px;
+      }
+      
+      .under-actions { flex-direction: column; gap: 12px; }
+      .clear-btn { padding: 12px 20px; }
+      
+      .stats { 
+        grid-template-columns: 1fr; 
+        gap: 16px; 
+        margin-top: 20px; 
+      }
+      .card { padding: 16px; }
+      .value { font-size: 1.2em; }
+      
+      .ad-wrap { width: 95vw; margin: 0 2.5vw; }
+      .ad-body { height: 280px; padding: 16px; }
+      
+      footer { padding: 20px 16px; font-size: 0.9em; }
+    }
+    
+    @media (max-width: 480px) {
+      .nav { padding: 10px 12px; }
+      .container { padding: 12px; }
+      .hero-card { padding: 16px; }
+      .panel { padding: 16px; }
+      .title { font-size: 1.1em; }
+      .subtitle { font-size: 0.85em; }
+      
+      textarea { 
+        min-height: 180px; 
+        padding: 14px;
+        font-size: 16px;
+      }
+      
+      .stats { gap: 12px; }
+      .card { padding: 14px; }
+      .value { font-size: 1.1em; }
+      .label { font-size: 0.85em; }
+      
+      .ad-wrap { width: 98vw; margin: 0 1vw; }
+      .ad-body { height: 250px; padding: 12px; }
+    }
   </style>
 </head>
 <body>
@@ -437,7 +508,7 @@
     function setUILanguage(lang) {
       const u = i18n.ui[lang] || i18n.ui.en;
       document.documentElement.lang = lang;
-      document.getElementById('brand').textContent = u.title;
+      // Brand text was removed, so we don't need to update it
       document.getElementById('title').textContent = u.title;
       document.getElementById('subtitle').textContent = u.subtitle;
       document.getElementById('textInput').placeholder = u.placeholder;
@@ -655,6 +726,32 @@
       // Logo home link
       document.getElementById('logoHome').addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      
+      // Mobile touch optimizations
+      
+      // Prevent zoom on double tap for mobile
+      let lastTouchEnd = 0;
+      ta.addEventListener('touchend', (e) => {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+          e.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+      
+      // Improve touch scrolling
+      ta.style.webkitOverflowScrolling = 'touch';
+      
+      // Add touch feedback for buttons
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(btn => {
+        btn.addEventListener('touchstart', () => {
+          btn.style.transform = 'scale(0.98)';
+        });
+        btn.addEventListener('touchend', () => {
+          btn.style.transform = 'scale(1)';
+        });
       });
     });
 
