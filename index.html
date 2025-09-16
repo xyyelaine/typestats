@@ -64,9 +64,12 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      font-size: 1.2em;
+      font-size: 1.1em;
       font-weight: 700;
       margin-left: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     select, button { 
@@ -144,7 +147,7 @@
       height: 2px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
     }
-    .title { font-size: 22px; font-weight: 800; margin: 0 0 8px; }
+    .title { font-size: 1.1em; font-weight: 800; margin: 0 0 8px; }
     .subtitle { color: var(--muted); margin: 0; line-height: 1.4; font-size: 0.95em; }
 
     .panel { 
@@ -239,7 +242,7 @@
   <header>
     <div class="nav">
       <div class="brand">
-        <img class="brand-logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMTgwIDMyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB4PSIyIiB5PSIzIiB3aWR0aD0iMTgiIGhlaWdodD0iMjQiIHJ4PSIyIiBmaWxsPSIjMWU0MGFmIi8+CjxwYXRoIGQ9Ik0xNiAzIEwyMCA3IEwxNiA3IFoiIGZpbGw9IiMwZjE3MmEiIG9wYWNpdHk9IjAuMyIvPgo8cmVjdCB4PSI1IiB5PSI3IiB3aWR0aD0iMTAiIGhlaWdodD0iMS4yIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45Ii8+CjxyZWN0IHg9IjUiIHk9IjkuNSIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgo8cmVjdCB4PSI1IiB5PSIxMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgo8cmVjdCB4PSI1IiB5PSIxNC41IiB3aWR0aD0iNyIgaGVpZ2h0PSIxLjIiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjciLz4KPHJlY3QgeD0iNSIgeT0iMTciIHdpZHRoPSI5IiBoZWlnaHQ9IjEuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuNyIvPgo8cmVjdCB4PSI1IiB5PSIxOS41IiB3aWR0aD0iNSIgaGVpZ2h0PSIxLjIiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjUiLz4KPHRleHQgeD0iMjYiIHk9IjEyIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjMWU0MGFmIj5UeXBlPC90ZXh0Pgo8dGV4dCB4PSIyNiIgeT0iMjIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9InVybCgjZ3JhZGllbnQpIj5TdGF0czwvdGV4dD4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjAlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFlNDBhZjtzdG9wLW9wYWNpdHk6MSIgLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDZiNmQ0O3N0b3Atb3BhY2l0eToxIiAvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=" alt="TypeStats Logo">
+        <img class="brand-logo" id="logoHome" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMTgwIDMyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB4PSIyIiB5PSIzIiB3aWR0aD0iMTgiIGhlaWdodD0iMjQiIHJ4PSIyIiBmaWxsPSIjMWU0MGFmIi8+CjxwYXRoIGQ9Ik0xNiAzIEwyMCA3IEwxNiA3IFoiIGZpbGw9IiMwZjE3MmEiIG9wYWNpdHk9IjAuMyIvPgo8cmVjdCB4PSI1IiB5PSI3IiB3aWR0aD0iMTAiIGhlaWdodD0iMS4yIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45Ii8+CjxyZWN0IHg9IjUiIHk9IjkuNSIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgo8cmVjdCB4PSI1IiB5PSIxMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgo8cmVjdCB4PSI1IiB5PSIxNC41IiB3aWR0aD0iNyIgaGVpZ2h0PSIxLjIiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjciLz4KPHJlY3QgeD0iNSIgeT0iMTciIHdpZHRoPSI5IiBoZWlnaHQ9IjEuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuNyIvPgo8cmVjdCB4PSI1IiB5PSIxOS41IiB3aWR0aD0iNSIgaGVpZ2h0PSIxLjIiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjUiLz4KPHRleHQgeD0iMjYiIHk9IjEyIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjMWU0MGFmIj5UeXBlPC90ZXh0Pgo8dGV4dCB4PSIyNiIgeT0iMjIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9InVybCgjZ3JhZGllbnQpIj5TdGF0czwvdGV4dD4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjAlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFlNDBhZjtzdG9wLW9wYWNpdHk6MSIgLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDZiNmQ0O3N0b3Atb3BhY2l0eToxIiAvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=" alt="TypeStats Logo" style="cursor: pointer;">
         <div id="brand" class="brand-text">Character Counter</div>
       </div>
       <div class="controls">
@@ -335,11 +338,16 @@
         <button id="adClose" type="button" style="padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:transparent;cursor:pointer">Close</button>
       </div>
       <div class="ad-body" id="adMessage">
-        <div style="color:var(--muted);text-align:center;padding:20px;">
-          <h3 style="margin:0 0 16px;color:var(--text)">감사합니다!</h3>
-          <p style="margin:0 0 12px;">텍스트 붙여넣기를 이용해 주셔서 감사합니다.</p>
-          <p style="margin:0;font-size:0.9em;">이 서비스가 도움이 되셨다면 즐겨찾기에 추가해 주세요.</p>
-        </div>
+        <!-- typestats-pop-up -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8559690324489971"
+             data-ad-slot="8708902408"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
       </div>
     </div>
   </div>
@@ -374,8 +382,8 @@
     // i18n (UI + labels + script names)
     const i18n = {
       ui: {
-        en:{title:'Character Counter',subtitle:'Paste text to analyze multilingual counts accurately.',paste:'Paste text',clear:'Clear',placeholder:'Type or paste your text…',hi1:'Accurate',hi1s:'Counts letters, words, digits, punctuation by language.',hi2:'Smart rules',hi2s:'Korean-dominant rule, otherwise unified rule.'},
-        ko:{title:'글자수 세기',subtitle:'텍스트를 붙여넣어 다국어 글자수를 정확히 분석합니다.',paste:'텍스트 붙여넣기',clear:'지우기',placeholder:'텍스트를 입력하거나 붙여넣으세요…',hi1:'정확한 집계',hi1s:'언어별 글자·단어·숫자·문장부호 집계.',hi2:'스마트 규칙',hi2s:'한국어 최다 시 특수 규칙, 그 외 통일 규칙.'},
+        en:{title:'Precise Multilingual Counter',subtitle:'Paste text to analyze multilingual counts accurately.',paste:'Paste text',clear:'Clear',placeholder:'Type or paste your text…',hi1:'Accurate',hi1s:'Counts letters, words, digits, punctuation by language.',hi2:'Smart rules',hi2s:'Korean-dominant rule, otherwise unified rule.'},
+        ko:{title:'정확한 다국어 카운터',subtitle:'텍스트를 붙여넣어 다국어 글자수를 정확히 분석합니다.',paste:'텍스트 붙여넣기',clear:'지우기',placeholder:'텍스트를 입력하거나 붙여넣으세요…',hi1:'정확한 집계',hi1s:'언어별 글자·단어·숫자·문장부호 집계.',hi2:'스마트 규칙',hi2s:'한국어 최다 시 특수 규칙, 그 외 통일 규칙.'},
         'zh-CN':{title:'字数统计',subtitle:'粘贴文本以准确分析多语言统计。',paste:'粘贴文本',clear:'清空',placeholder:'输入或粘贴文本…',hi1:'准确统计',hi1s:'按语言统计字母/单词/数字/标点。',hi2:'智能规则',hi2s:'韩文占主时特殊规则，其他统一。'},
         'zh-TW':{title:'字数統計',subtitle:'貼上文字以精準分析多語統計。',paste:'貼上文字',clear:'清除',placeholder:'輸入或貼上文字…',hi1:'精準統計',hi1s:'依語言統計字母/單字/數字/標點。',hi2:'智慧規則',hi2s:'韓文為主時特殊規則，其他統一。'},
         ja:{title:'文字数カウンター',subtitle:'テキストを貼り付けて多言語を正確に分析。',paste:'テキストを貼り付け',clear:'クリア',placeholder:'テキストを入力/貼り付け…',hi1:'高精度',hi1s:'スクリプト別に文字/単語/数字/句読点を集計。',hi2:'スマート規則',hi2s:'韓国語最多時は特別規則、それ以外は統一。'},
@@ -644,6 +652,11 @@
       }, { capture: true });
 
       // Language is already set by detectBrowserLanguage() above
+      
+      // Logo home link
+      document.getElementById('logoHome').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     });
 
     // Light "view source" deterrents (bypassable)
