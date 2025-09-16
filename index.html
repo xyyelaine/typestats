@@ -404,5 +404,19 @@
       }
     })();
   </script>
+<script>
+  function fillPlaceholder(id, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-weight:700;">${text}</div>`;
+  }
+  window.addEventListener('DOMContentLoaded', () => {
+    fillPlaceholder('adTop', 'Top Banner Placeholder');
+    fillPlaceholder('adInline', 'Inline Banner Placeholder');
+    fillPlaceholder('adFooter', 'Bottom Banner Placeholder');
+    const modalBody = document.querySelector('#adModal .ad-body');
+    if (modalBody) modalBody.innerHTML = '<div style="color:#94a3b8;font-weight:700;">Modal Ad Placeholder</div>';
+  });
+</script>
 </body>
 </html>
