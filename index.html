@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8559690324489971"
+     crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Character Counter</title>
+  <!-- AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8559690324489971" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg1: #f3f6fb; --bg2: #ffffff;
+      --text: #0f172a; --muted: #475569;
+      --card: #ffffffcc; --border: #c7cedb66;
+      --accent: #2563eb; --accent-2: #9333ea;
+      --ad-bg: #f8fafcaa;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg1: #0b1220; --bg2: #0a0f1a;
+        --text: #e5e7eb; --muted: #9aa4b2;
+        --card: #121a2dcc; --border: #5c6b8266;
+        --accent: #60a5fa; --accent-2: #c084fc;
+        --ad-bg: #0f172aaa;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Apple SD Gothic Neo, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      display: flex; flex-direction: column;
+    }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--card);
+      backdrop-filter: saturate(140%) blur(6px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { max-width: 1200px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .2px; }
+    .brand-badge { background: linear-gradient(135deg, var(--accent), var(--accent-2)); width: 28px; height: 28px; border-radius: 7px; box-shadow: 0 4px 18px rgba(37,99,235,.35); }
+    .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    select, button { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; }
+    button.primary { background: var(--accent); color: #fff; border-color: transparent; }
+    button:hover { filter: brightness(1.02); }
+    main { flex: 1; }
+    .container { max-width: 1200px; margin: 24px auto; padding: 0 20px; }
+
+    .ad-slot { background: var(--ad-bg); border: 1px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--muted); overflow: hidden; }
+    .ad-slot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    #adTop { height: 100px; margin: 10px 0 20px; }
+    #adInline { height: 90px; margin: 14px 0; }
+    #adFooter { height: 90px; margin: 18px 0 0; }
+
+    .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; align-items: center; margin-bottom: 16px; }
+    @media (max-width: 960px) { .hero { grid-template-columns: 1fr; } }
+    .hero-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+    .title { font-size: 22px; font-weight: 800; margin: 0 0 6px; }
+    .subtitle { color: var(--muted); margin: 0; }
+
+    .panel { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+    .row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+    textarea { width: 100%; min-height: 240px; resize: vertical; border: 1px solid var(--border); background: transparent; color: var(--text); border-radius: 12px; padding: 12px; font: inherit; line-height: 1.6; }
+    .under-actions { display: flex; justify-content: flex-start; margin-top: 8px; gap: 8px; }
+
+    .stats { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .card { padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
+    .label { color: var(--muted); font-size: .9em; }
+    .value { font-weight: 800; font-size: 1.25em; margin-top: 2px; }
+
+    footer { color: var(--muted); text-align: center; padding: 24px 12px; }
+
+    #adModal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.5); z-index: 9999; }
+    .ad-wrap { width: min(720px, 92vw); background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden; }
+    .ad-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .ad-body { padding: 22px; height: 320px; display: flex; align-items: center; justify-content: center; text-align: center; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="brand-badge"></div>
+        <div id="brand">Character Counter</div>
+      </div>
+      <div class="controls">
+        <label for="lang" class="sr-only" style="position:absolute;left:-9999px">Language</label>
+        <select id="lang" aria-label="Language"></select>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div id="adTop" class="ad-slot">
+        <!-- Top Banner - TypeStats -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8559690324489971"
+             data-ad-slot="3634322089"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+      <div class="hero">
+        <div class="hero-card">
+          <h1 class="title" id="title">Character Counter</h1>
+          <p class="subtitle" id="subtitle">Paste text to analyze multilingual counts accurately.</p>
+        </div>
+        <div class="hero-card">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div style="padding:12px;border:1px dashed var(--border);border-radius:12px;">
+              <div style="font-weight:700;margin-bottom:4px" id="hi1">Accurate</div>
+              <div class="subtitle" id="hi1s">Counts letters, words, digits, punctuation by script.</div>
+            </div>
+            <div style="padding:12px;border:1px dashed var(--border);border-radius:12px;">
+              <div style="font-weight:700;margin-bottom:4px" id="hi2">Smart rules</div>
+              <div class="subtitle" id="hi2s">Korean-dominant rule else unified rule.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="row">
+          <button id="pasteBtnTop" class="primary" type="button">Paste text</button>
+        </div>
+
+        <textarea id="textInput" placeholder="Type or paste your text…"></textarea>
+        <div class="under-actions">
+          <button id="clearBtn" type="button">Clear</button>
+        </div>
+
+        <div id="adInline" class="ad-slot">
+          <!-- Inline Banner - TypeStats -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-8559690324489971"
+               data-ad-slot="5824537000"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+
+        <div id="result" style="margin-top: 12px;"></div>
+
+        <div id="adFooter" class="ad-slot">
+          <!-- Footer Banner - TypeStats -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-8559690324489971"
+               data-ad-slot="3077301779"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Type Stats. All rights reserved.
+  </footer>
+
+  <div id="adModal">
+    <div class="ad-wrap">
+      <div class="ad-head">
+        <div style="font-weight:700">Notice</div>
+        <button id="adClose" type="button" style="padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:transparent;cursor:pointer">Close</button>
+      </div>
+      <div class="ad-body" id="adMessage">
+        <div style="color:var(--muted);text-align:center;padding:20px;">
+          <h3 style="margin:0 0 16px;color:var(--text)">감사합니다!</h3>
+          <p style="margin:0 0 12px;">텍스트 붙여넣기를 이용해 주셔서 감사합니다.</p>
+          <p style="margin:0;font-size:0.9em;">이 서비스가 도움이 되셨다면 즐겨찾기에 추가해 주세요.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Basic regexes
+    const RX = {
+      punct: /\p{P}/gu,
+      latin: /[A-Za-z]/g,
+      ew: /(?<![A-Za-z0-9])[A-Za-z0-9'-]*[A-Za-z][A-Za-z0-9'-]*(?![A-Za-z0-9])/g,
+      han: /\p{Script=Han}/gu,
+      hangul: /\p{Script=Hangul}/gu,
+      hira: /\p{Script=Hiragana}/gu,
+      kata: /\p{Script=Katakana}/gu,
+      thai: /\p{Script=Thai}/gu,
+      arab: /\p{Script=Arabic}/gu,
+      deva: /\p{Script=Devanagari}/gu,
+      cyrl: /\p{Script=Cyrillic}/gu,
+      greek:/\p{Script=Greek}/gu,
+      hebr: /\p{Script=Hebrew}/gu
+    };
+
+    // Normalize pasted text (top and tail cleanup)
+    function normalizePasted(text) {
+      return text
+        .replace(/\r\n?/g, '\n')
+        .replace(/^\s*\n+/, '')
+        .replace(/\n{3,}/g, '\n\n')
+        .replace(/\s+$/g, '');
+    }
+
+    // i18n (UI + labels + script names)
+    const i18n = {
+      ui: {
+        en:{title:'Character Counter',subtitle:'Paste text to analyze multilingual counts accurately.',paste:'Paste text',clear:'Clear',placeholder:'Type or paste your text…',hi1:'Accurate',hi1s:'Counts letters, words, digits, punctuation by script.',hi2:'Smart rules',hi2s:'Korean-dominant rule else unified rule.'},
+        ko:{title:'글자수 세기',subtitle:'텍스트를 붙여넣어 다국어 글자수를 정확히 분석합니다.',paste:'텍스트 붙여넣기',clear:'지우기',placeholder:'텍스트를 입력하거나 붙여넣으세요…',hi1:'정확한 집계',hi1s:'스크립트별 글자·단어·숫자·문장부호 집계.',hi2:'스마트 규칙',hi2s:'한국어 최다 시 특수 규칙, 그 외 통일 규칙.'},
+        'zh-CN':{title:'字符统计',subtitle:'粘贴文本以准确分析多语言统计。',paste:'粘贴文本',clear:'清空',placeholder:'输入或粘贴文本…',hi1:'准确统计',hi1s:'按脚本统计字母/单词/数字/标点。',hi2:'智能规则',hi2s:'韩文占主时特殊规则，其他统一。'},
+        'zh-TW':{title:'字元統計',subtitle:'貼上文字以精準分析多語統計。',paste:'貼上文字',clear:'清除',placeholder:'輸入或貼上文字…',hi1:'精準統計',hi1s:'依腳本統計字母/單字/數字/標點。',hi2:'智慧規則',hi2s:'韓文為主時特殊規則，其他統一。'},
+        ja:{title:'文字数カウンター',subtitle:'テキストを貼り付けて多言語を正確に分析。',paste:'テキストを貼り付け',clear:'クリア',placeholder:'テキストを入力/貼り付け…',hi1:'高精度',hi1s:'スクリプト別に文字/単語/数字/句読点を集計。',hi2:'スマート規則',hi2s:'韓国語最多時は特別規則、それ以外は統一。'},
+        th:{title:'ตัวนับอักขระ',subtitle:'วางข้อความเพื่อวิเคราะห์หลายภาษาอย่างแม่นยำ',paste:'วางข้อความ',clear:'ล้าง',placeholder:'พิมพ์หรือวางข้อความ…',hi1:'แม่นยำ',hi1s:'นับตัวอักษร คำ ตัวเลข เครื่องหมายวรรคตอน',hi2:'กฎอัจฉริยะ',hi2s:'ถ้าเกาหลีมากสุดใช้กฎพิเศษ ไม่งั้นกฎเดียวกัน'},
+        vi:{title:'Bộ đếm ký tự',subtitle:'Dán văn bản để phân tích đa ngôn ngữ chính xác.',paste:'Dán văn bản',clear:'Xóa',placeholder:'Nhập hoặc dán văn bản…',hi1:'Chính xác',hi1s:'Đếm chữ, từ, số, dấu câu theo bảng chữ.',hi2:'Quy tắc thông minh',hi2s:'Hàn Quốc chiếm đa số dùng quy tắc riêng, khác thì thống nhất.'},
+        ru:{title:'Счётчик символов',subtitle:'Вставьте текст для точного многоязычного анализа.',paste:'Вставить текст',clear:'Очистить',placeholder:'Введите или вставьте текст…',hi1:'Точно',hi1s:'Подсчёт букв, слов, цифр, пунктуации по скриптам.',hi2:'Умные правила',hi2s:'Для корейского особое правило, иначе единое.'},
+        ar:{title:'عداد الأحرف',subtitle:'الصق النص لتحليل متعدد اللغات بدقة.',paste:'لصق النص',clear:'مسح',placeholder:'اكتب أو الصق النص…',hi1:'دقيق',hi1s:'يحسب الحروف والكلمات والأرقام وعلامات الترقيم حسب النص.',hi2:'قواعد ذكية',hi2s:'الكورية لها قاعدة خاصة إذا كانت الأكثر، وإلا قاعدة موحدة.'},
+        fr:{title:'Compteur de caractères',subtitle:'Collez du texte pour une analyse multilingue précise.',paste:'Coller le texte',clear:'Effacer',placeholder:'Saisissez ou collez du texte…',hi1:'Précis',hi1s:'Compte lettres, mots, chiffres, ponctuation par script.',hi2:'Règles intelligentes',hi2s:'Coréen dominant sinon règle unifiée.'},
+        de:{title:'Zeichenzähler',subtitle:'Fügen Sie Text ein für eine präzise Mehrsprachanalyse.',paste:'Text einfügen',clear:'Löschen',placeholder:'Text eingeben oder einfügen…',hi1:'Präzise',hi1s:'Zählt Buchstaben, Wörter, Ziffern, Interpunktion pro Skript.',hi2:'Smarte Regeln',hi2s:'Koreanisch-dominant sonst einheitlich.'},
+        es:{title:'Contador de caracteres',subtitle:'Pega texto para analizar con precisión multilingüe.',paste:'Pegar texto',clear:'Borrar',placeholder:'Escribe o pega texto…',hi1:'Preciso',hi1s:'Cuenta letras, palabras, dígitos, puntuación por script.',hi2:'Reglas inteligentes',hi2s:'Coreano dominante, sino regla unificada.'},
+        pt:{title:'Contador de caracteres',subtitle:'Cole o texto para análise multilíngue precisa.',paste:'Colar texto',clear:'Limpar',placeholder:'Digite ou cole o texto…',hi1:'Preciso',hi1s:'Conta letras, palavras, dígitos, pontuação por script.',hi2:'Regras inteligentes',hi2s:'Coreano dominante; caso contrário regra unificada.'}
+      },
+      labels: {
+        en:{scriptChars:n=>`${n} characters`,enLetters:'English letters',enWords:'English words',digits:'Digits',punct:'Punctuation',total:'Total (no spaces)'},
+        ko:{scriptChars:n=>`${n} 글자수`,enLetters:'영어 글자수',enWords:'영어 단어 수',digits:'숫자',punct:'문장부호',total:'전체 글자수 (공백 제외)'},
+        'zh-CN':{scriptChars:n=>`${n} 字符数`,enLetters:'英文字母数',enWords:'英文单词数',digits:'数字',punct:'标点符号',total:'总字符数（去空白）'},
+        'zh-TW':{scriptChars:n=>`${n} 字元數`,enLetters:'英文字母數',enWords:'英文單字數',digits:'數字',punct:'標點符號',total:'總字元數（去空白）'},
+        ja:{scriptChars:n=>`${n} 文字数`,enLetters:'英語の文字数',enWords:'英語の単語数',digits:'数字',punct:'句読点',total:'総文字数（空白除く）'},
+        th:{scriptChars:n=>`อักขระภาษา${n}`,enLetters:'ตัวอักษรอังกฤษ',enWords:'คำภาษาอังกฤษ',digits:'ตัวเลข',punct:'เครื่องหมายวรรคตอน',total:'รวม (ไม่รวมช่องว่าง)'},
+        vi:{scriptChars:n=>`Ký tự ${n}`,enLetters:'Chữ cái tiếng Anh',enWords:'Từ tiếng Anh',digits:'Chữ số',punct:'Dấu câu',total:'Tổng (không tính khoảng trắng)'},
+        ru:{scriptChars:n=>`Символы: ${n}`,enLetters:'Английские буквы',enWords:'Английские слова',digits:'Цифры',punct:'Знаки препинания',total:'Всего (без пробелов)'},
+        ar:{scriptChars:n=>`أحرف ${n}`,enLetters:'حروف إنجليزية',enWords:'كلمات إنجليزية',digits:'أرقام',punct:'علامات ترقيم',total:'الإجمالي (بدون مسافات)'},
+        fr:{scriptChars:n=>`${n} caractères`,enLetters:'Lettres anglaises',enWords:'Mots anglais',digits:'Chiffres',punct:'Ponctuation',total:'Total (sans espaces)'},
+        de:{scriptChars:n=>`${n} Zeichen`,enLetters:'Englische Buchstaben',enWords:'Englische Wörter',digits:'Ziffern',punct:'Zeichensetzung',total:'Gesamt (ohne Leerzeichen)'},
+        es:{scriptChars:n=>`${n} caracteres`,enLetters:'Letras en inglés',enWords:'Palabras en inglés',digits:'Dígitos',punct:'Puntuación',total:'Total (sin espacios)'},
+        pt:{scriptChars:n=>`${n} caracteres`,enLetters:'Letras em inglês',enWords:'Palavras em inglês',digits:'Dígitos',punct:'Pontuação',total:'Total (sem espaços)'}
+      },
+      scripts: {
+        en:{Korean:'Korean',Chinese:'Chinese',Japanese:'Japanese',Thai:'Thai',Arabic:'Arabic',Devanagari:'Hindi',Cyrillic:'Cyrillic',Greek:'Greek',Hebrew:'Hebrew'},
+        ko:{Korean:'한국어',Chinese:'중국어',Japanese:'일본어',Thai:'태국어',Arabic:'아랍어',Devanagari:'힌디어',Cyrillic:'키릴 문자',Greek:'그리스어',Hebrew:'히브리어'},
+        'zh-CN':{Korean:'韩语',Chinese:'中文',Japanese:'日语',Thai:'泰语',Arabic:'阿拉伯语',Devanagari:'印地语',Cyrillic:'西里尔文',Greek:'希腊语',Hebrew:'希伯来语'},
+        'zh-TW':{Korean:'韓語',Chinese:'中文',Japanese:'日語',Thai:'泰語',Arabic:'阿拉伯語',Devanagari:'印地語',Cyrillic:'西里爾文',Greek:'希臘語',Hebrew:'希伯來語'},
+        ja:{Korean:'韓国語',Chinese:'中国語',Japanese:'日本語',Thai:'タイ語',Arabic:'アラビア語',Devanagari:'ヒンディー語',Cyrillic:'キリル文字',Greek:'ギリシャ語',Hebrew:'ヘブライ語'},
+        th:{Korean:'เกาหลี',Chinese:'จีน',Japanese:'ญี่ปุ่น',Thai:'ไทย',Arabic:'อาหรับ',Devanagari:'ฮินดี',Cyrillic:'ซีริลลิก',Greek:'กรีก',Hebrew:'ฮีบรู'},
+        vi:{Korean:'Hàn',Chinese:'Trung',Japanese:'Nhật',Thai:'Thái',Arabic:'Ả Rập',Devanagari:'Hindi',Cyrillic:'Chữ Kirin',Greek:'Hy Lạp',Hebrew:'Do Thái'},
+        ru:{Korean:'Корейский',Chinese:'Китайский',Japanese:'Японский',Thai:'Тайский',Arabic:'Арабский',Devanagari:'Хинди',Cyrillic:'Кириллица',Greek:'Греческий',Hebrew:'Иврит'},
+        ar:{Korean:'الكورية',Chinese:'الصينية',Japanese:'اليابانية',Thai:'التايلاندية',Arabic:'العربية',Devanagari:'الهندية',Cyrillic:'السيريلية',Greek:'اليونانية',Hebrew:'العبرية'},
+        fr:{Korean:'Coréen',Chinese:'Chinois',Japanese:'Japonais',Thai:'Thaï',Arabic:'Arabe',Devanagari:'Hindi',Cyrillic:'Cyrillique',Greek:'Grec',Hebrew:'Hébreu'},
+        de:{Korean:'Koreanisch',Chinese:'Chinesisch',Japanese:'Japanisch',Thai:'Thailändisch',Arabic:'Arabisch',Devanagari:'Hindi',Cyrillic:'Kyrillisch',Greek:'Griechisch',Hebrew:'Hebräisch'},
+        es:{Korean:'Coreano',Chinese:'Chino',Japanese:'Japonés',Thai:'Tailandés',Arabic:'Árabe',Devanagari:'Hindi',Cyrillic:'Cirílico',Greek:'Griego',Hebrew:'Hebreo'},
+        pt:{Korean:'Coreano',Chinese:'Chinês',Japanese:'Japonês',Thai:'Tailandês',Arabic:'Árabe',Devanagari:'Hindi',Cyrillic:'Cirílico',Greek:'Grego',Hebrew:'Hebraico'}
+      }
+    };
+
+    const langOrder = ['en','ko','zh-CN','zh-TW','ja','th','vi','ru','ar','fr','de','es','pt'];
+
+    function localScriptName(key, uiLang) {
+      const m = i18n.scripts[uiLang] || i18n.scripts.en;
+      return m[key] || key;
+    }
+
+    function setUILanguage(lang) {
+      const u = i18n.ui[lang] || i18n.ui.en;
+      document.documentElement.lang = lang;
+      document.getElementById('brand').textContent = u.title;
+      document.getElementById('title').textContent = u.title;
+      document.getElementById('subtitle').textContent = u.subtitle;
+      document.getElementById('textInput').placeholder = u.placeholder;
+      document.getElementById('hi1').textContent = u.hi1;
+      document.getElementById('hi1s').textContent = u.hi1s;
+      document.getElementById('hi2').textContent = u.hi2;
+      document.getElementById('hi2s').textContent = u.hi2s;
+      document.getElementById('pasteBtnTop').textContent = u.paste;
+      document.getElementById('clearBtn').textContent = u.clear;
+      onInput();
+    }
+
+    function countNonEmptyLines(text) {
+      const normalized = text.replace(/\r\n?/g, '\n');
+      if (!normalized) return 0;
+      return normalized.split('\n').filter(l => l.trim().length > 0).length;
+    }
+
+    function analyze(text, uiLang) {
+      const noSpaces = text.replace(/\s+/g, '');
+      const englishLetters = (noSpaces.match(RX.latin) || []).length;
+      const englishWords = (text.match(RX.ew) || []).length;
+      const digits = (noSpaces.match(/[0-9]/g) || []).length;
+      const punct = (noSpaces.match(RX.punct) || []).length;
+
+      const counts = {
+        Korean: (noSpaces.match(RX.hangul) || []).length,
+        Chinese: (noSpaces.match(RX.han) || []).length,
+        Hiragana: (noSpaces.match(RX.hira) || []).length,
+        Katakana: (noSpaces.match(RX.kata) || []).length,
+        Thai: (noSpaces.match(RX.thai) || []).length,
+        Arabic: (noSpaces.match(RX.arab) || []).length,
+        Devanagari: (noSpaces.match(RX.deva) || []).length,
+        Cyrillic: (noSpaces.match(RX.cyrl) || []).length,
+        Greek: (noSpaces.match(RX.greek) || []).length,
+        Hebrew: (noSpaces.match(RX.hebr) || []).length
+      };
+      counts.Japanese = (counts.Hiragana || 0) + (counts.Katakana || 0);
+      delete counts.Hiragana; delete counts.Katakana;
+
+      let primary = { key: null, count: 0 };
+      for (const [k, v] of Object.entries(counts)) if (v > primary.count) primary = { key: k, count: v };
+
+      const englishDisplay = (primary.key === 'Korean') ? englishLetters : englishWords;
+
+      const sumScripts = Object.values(counts).reduce((a,b)=>a+b,0);
+      const englishForTotal = (primary.key === 'Korean') ? englishLetters : englishWords;
+      const allLanguagesUnits = sumScripts + englishForTotal;
+      const total = (primary.key === 'Korean') ? noSpaces.length : (allLanguagesUnits + digits);
+
+      return { uiLang, counts, primary, englishDisplay, englishWords, digits, punct, total };
+    }
+
+    function render(stats) {
+      const L = i18n.labels[stats.uiLang] || i18n.labels.en;
+      const englishLabel = (stats.primary.key === 'Korean') ? L.enLetters : L.enWords;
+
+      const scriptCards = Object.entries(stats.counts)
+        .filter(([, v]) => v > 0)
+        .map(([k, v]) => {
+          const nameLoc = localScriptName(k, stats.uiLang);
+          return `<div class="card"><div class="label">${L.scriptChars(nameLoc)}</div><div class="value">${v.toLocaleString()}</div></div>`;
+        }).join('');
+
+      let totalLabel = L.total;
+      if (stats.primary.key !== 'Korean') {
+        const comp = [];
+        for (const [k, v] of Object.entries(stats.counts)) if (v > 0) comp.push(localScriptName(k, stats.uiLang));
+        if (stats.englishWords > 0) comp.push(englishLabel);
+        comp.push('L.Digits');
+        totalLabel = `Total (${comp.join(' + ')}, no punctuation)`;
+      }
+
+      document.getElementById('result').innerHTML = `
+        <div class="stats">
+          ${scriptCards}
+          <div class="card"><div class="label">${englishLabel}</div><div class="value">${stats.englishDisplay.toLocaleString()}</div></div>
+          <div class="card"><div class="label">${L.digits}</div><div class="value">${stats.digits.toLocaleString()}</div></div>
+          <div class="card"><div class="label">${L.punct}</div><div class="value">${stats.punct.toLocaleString()}</div></div>
+          <div class="card"><div class="label">${totalLabel}</div><div class="value">${stats.total.toLocaleString()}</div></div>
+        </div>
+      `;
+    }
+
+    async function pasteText() {
+      const el = document.getElementById('textInput');
+      try {
+        let clip = await navigator.clipboard.readText();
+        clip = normalizePasted(clip);
+        const start = el.selectionStart ?? el.value.length;
+        const end   = el.selectionEnd ?? el.value.length;
+        el.value = el.value.slice(0, start) + clip + el.value.slice(end);
+        const pos = start + clip.length;
+        el.setSelectionRange?.(pos, pos);
+      } catch {
+        const fallback = prompt('Paste is not allowed by the browser.\nPlease paste your content here:');
+        if (fallback !== null) {
+          const cleaned = normalizePasted(fallback);
+          el.value += (el.value ? '\n' : '') + cleaned;
+        }
+      }
+      el.scrollTop = 0;
+      showAdAfterPaste();
+      el.focus();
+    }
+
+    function clearText() {
+      const el = document.getElementById('textInput');
+      el.value = '';
+      document.getElementById('result').innerHTML = '';
+      el.focus();
+    }
+
+    let inputTimer;
+    function onInput() {
+      clearTimeout(inputTimer);
+      inputTimer = setTimeout(() => {
+        const uiLang = document.getElementById('lang').value;
+        const text = document.getElementById('textInput').value;
+        render(analyze(text, uiLang));
+      }, 60);
+    }
+
+    // Always show modal after paste (every time)
+    function showAdAfterPaste() {
+      const modal = document.getElementById('adModal');
+      modal.style.display = 'flex';
+      document.getElementById('adClose').onclick = () => {
+        modal.style.display = 'none';
+        onInput();
+      };
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Fill localized thank-you message in modal (optional simple EN/KR)
+      const msg = {
+        en: "Thanks for using our text counter. Close this message to see your results.",
+        ko: "이용해 주셔서 감사합니다. 닫기를 누르면 결과를 확인할 수 있어요."
+      };
+      const uiLang = 'en';
+      document.getElementById('adMessage').textContent = msg[uiLang];
+
+      const sel = document.getElementById('lang');
+      sel.innerHTML = ['en','ko','zh-CN','zh-TW','ja','th','vi','ru','ar','fr','de','es','pt'].map(code => {
+        const label = ({en:'English',ko:'한국어','zh-CN':'中文(简体)','zh-TW':'中文(繁體)',ja:'日本語',th:'ภาษาไทย',vi:'Tiếng Việt',ru:'Русский',ar:'العربية',fr:'Français',de:'Deutsch',es:'Español',pt:'Português'})[code];
+        return `<option value="${code}">${label}</option>`;
+      }).join('');
+      sel.value = 'en';
+      sel.addEventListener('change', () => {
+        setUILanguage(sel.value);
+        document.getElementById('adMessage').textContent =
+          sel.value === 'ko' ? msg.ko : msg.en;
+      });
+
+      // Top paste button
+      document.getElementById('pasteBtnTop').addEventListener('click', pasteText);
+      // Clear
+      document.getElementById('clearBtn').addEventListener('click', clearText);
+
+      // Textarea typing
+      const ta = document.getElementById('textInput');
+      ta.addEventListener('input', onInput);
+      // Keyboard paste handling (Cmd/Ctrl+V)
+      ta.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const raw = (e.clipboardData || window.clipboardData)?.getData('text') || '';
+        const cleaned = normalizePasted(raw);
+        const start = ta.selectionStart ?? ta.value.length;
+        const end   = ta.selectionEnd ?? ta.value.length;
+        ta.value = ta.value.slice(0, start) + cleaned + ta.value.slice(end);
+        const pos = start + cleaned.length;
+        ta.setSelectionRange?.(pos, pos);
+        ta.scrollTop = 0;
+        showAdAfterPaste();
+        ta.focus();
+      }, { capture: true });
+
+      setUILanguage('en');
+    });
+
+    // Light "view source" deterrents (bypassable)
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    document.addEventListener('keydown', (e) => {
+      const k = e.key.toLowerCase();
+      const ctrl = e.ctrlKey || e.metaKey;
+      if (
+        k === 'f12' ||
+        (ctrl && k === 'u') ||
+        (ctrl && e.shiftKey && ['i','j','c'].includes(k))
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    // Optional: limit features to your domain (keep modal)
+    (function lockToDomain() {
+      const allowed = ['typestats', 'localhost', '127.0.0.1', 'vercel.app'];
+      const host = location.hostname || '';
+      if (!allowed.some(a => host.includes(a))) {
+        // Keep the app, but you could disable specific features if needed
+      }
+    })();
+  </script>
+<script defer src="/vercel/insights/script.js"></script>  
+</body>
+</html>
