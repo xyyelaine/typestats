@@ -61,24 +61,33 @@
       backdrop-filter: saturate(140%) blur(6px);
       border-bottom: 1px solid var(--border);
     }
-    .nav { max-width: 1200px; margin: 0 auto; padding: 14px 20px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .2px; justify-self: start; }
+    .nav { max-width: 1200px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; position: relative; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .2px; }
     .brand-logo { height: 32px; width: auto; }
     .brand-text { 
       background: linear-gradient(135deg, #1e40af, #06b6d4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      font-size: 1.1em;
+      font-size: 0.9em;
       font-weight: 700;
       margin-left: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      grid-column: 2;
-      justify-self: center;
+      white-space: nowrap;
     }
-    .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-self: end; }
+    .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .nav-center { 
+      position: absolute; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      background: linear-gradient(135deg, #1e40af, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 0.9em;
+      font-weight: 700;
+      pointer-events: none;
+      white-space: nowrap;
+    }
     select, button { 
       padding: 12px 16px; 
       border-radius: 12px; 
@@ -249,7 +258,8 @@
       .nav { padding: 12px 16px; display: flex; flex-direction: row; justify-content: space-between; align-items: center; }
       .brand { justify-content: flex-start; flex-direction: row; align-items: center; gap: 8px; }
       .brand-logo { height: 28px; }
-      .brand-text { font-size: 0.8em; text-align: left; white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+      .brand-text { font-size: 0.8em; text-align: left; white-space: nowrap; max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+      .nav-center { display: none; }
       .controls { justify-content: flex-end; }
       
       .container { padding: 16px; }
@@ -292,7 +302,8 @@
     @media (max-width: 480px) {
       .nav { padding: 10px 12px; flex-direction: row; justify-content: space-between; align-items: center; }
       .brand { justify-content: flex-start; flex-direction: row; align-items: center; gap: 6px; }
-      .brand-text { font-size: 0.75em; text-align: left; max-width: 100px; overflow: hidden; text-overflow: ellipsis; }
+      .brand-text { font-size: 0.75em; text-align: left; max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+      .nav-center { display: none; }
       .controls { justify-content: flex-end; }
       .container { padding: 12px; }
       .hero-card { padding: 16px; }
@@ -323,6 +334,7 @@
         <img class="brand-logo" id="logoHome" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMTgwIDMyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8IS0tIERvY3VtZW50IGljb24gLS0+CjxyZWN0IHg9IjIiIHk9IjMiIHdpZHRoPSIxOCIgaGVpZ2h0PSIyNCIgcng9IjIiIGZpbGw9IiMxZTQwYWYiLz4KPHBhdGggZD0iTTE2IDMgTDIwIDcgTDE2IDcgWiIgZmlsbD0iIzBmMTcyYSIgb3BhY2l0eT0iMC4zIi8+CjxyZWN0IHg9IjUiIHk9IjciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxLjIiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KPHJlY3QgeD0iNSIgeT0iOS41IiB3aWR0aD0iMTAiIGhlaWdodD0iMS4yIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45Ii8+CjxyZWN0IHg9IjUiIHk9IjEyIiB3aWR0aD0iMTAiIGhlaWdodD0iMS4yIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45Ii8+CjxyZWN0IHg9IjUiIHk9IjE0LjUiIHdpZHRoPSI3IiBoZWlnaHQ9IjEuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuNyIvPgo8cmVjdCB4PSI1IiB5PSIxNyIgd2lkdGg9IjkiIGhlaWdodD0iMS4yIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC43Ii8+CjxyZWN0IHg9IjUiIHk9IjE5LjUiIHdpZHRoPSI1IiBoZWlnaHQ9IjEuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuNSIvPgoKPCEtLSBUeXBlU3RhdHMgdGV4dCAtLT4KPHRleHQgeD0iMjYiIHk9IjEyIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjMWU0MGFmIj5UeXBlPC90ZXh0Pgo8dGV4dCB4PSIyNiIgeT0iMjIiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9InVybCgjc3RhdHNHcmFkaWVudCkiPlN0YXRzPC90ZXh0PgoKPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0ic3RhdHNHcmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMWU0MGFmO3N0b3Atb3BhY2l0eToxIiAvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwNmI2ZDQ7c3RvcC1vcGFjaXR5OjEiIC8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPC9zdmc+Cg==" alt="TypeStats Logo" style="cursor: pointer;">
         <div id="brandText" class="brand-text">AI-powered Multilingual Character Counter</div>
       </div>
+      <div id="navCenterText" class="nav-center">AI-powered Multilingual Character Counter</div>
       <div class="controls">
         <label for="lang" class="sr-only" style="position:absolute;left:-9999px">Language</label>
         <select id="lang" aria-label="Language"></select>
@@ -517,6 +529,7 @@
       const u = i18n.ui[lang] || i18n.ui.en;
       document.documentElement.lang = lang;
       document.getElementById('brandText').textContent = u.brand;
+      document.getElementById('navCenterText').textContent = u.brand;
       document.getElementById('title').textContent = u.title;
       document.getElementById('subtitle').textContent = u.subtitle;
       document.getElementById('textInput').placeholder = u.placeholder;
