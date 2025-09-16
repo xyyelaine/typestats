@@ -244,11 +244,11 @@
 
     /* Mobile Responsive Styles */
     @media (max-width: 768px) {
-      .nav { padding: 12px 16px; flex-direction: column; gap: 16px; }
-      .brand { justify-content: center; flex-direction: column; align-items: center; gap: 8px; }
+      .nav { padding: 12px 16px; flex-direction: row; justify-content: space-between; align-items: center; }
+      .brand { justify-content: flex-start; flex-direction: row; align-items: center; gap: 8px; }
       .brand-logo { height: 28px; }
-      .brand-text { font-size: 0.9em; text-align: center; white-space: nowrap; }
-      .controls { justify-content: center; }
+      .brand-text { font-size: 0.9em; text-align: left; white-space: nowrap; }
+      .controls { justify-content: flex-end; }
       
       .container { padding: 16px; }
       .hero { gap: 16px; }
@@ -288,8 +288,10 @@
     }
     
     @media (max-width: 480px) {
-      .nav { padding: 10px 12px; }
-      .brand-text { font-size: 0.8em; }
+      .nav { padding: 10px 12px; flex-direction: row; justify-content: space-between; align-items: center; }
+      .brand { justify-content: flex-start; flex-direction: row; align-items: center; gap: 6px; }
+      .brand-text { font-size: 0.8em; text-align: left; max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+      .controls { justify-content: flex-end; }
       .container { padding: 12px; }
       .hero-card { padding: 16px; }
       .panel { padding: 16px; }
