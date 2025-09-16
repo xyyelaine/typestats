@@ -47,8 +47,8 @@
     main { flex: 1; }
     .container { max-width: 1200px; margin: 24px auto; padding: 0 20px; }
 
-    /* Visible ad banner slots */
-    .ad-slot { background: var(--ad-bg); border: 1px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--muted); }
+    .ad-slot { background: var(--ad-bg); border: 1px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--muted); overflow: hidden; }
+    .ad-slot img { display: block; width: 100%; height: 100%; object-fit: cover; }
     #adTop { height: 100px; margin: 10px 0 20px; }
     #adInline { height: 90px; margin: 14px 0; }
     #adFooter { height: 90px; margin: 18px 0 0; }
@@ -60,8 +60,9 @@
     .subtitle { color: var(--muted); margin: 0; }
 
     .panel { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+    .row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
     textarea { width: 100%; min-height: 240px; resize: vertical; border: 1px solid var(--border); background: transparent; color: var(--text); border-radius: 12px; padding: 12px; font: inherit; line-height: 1.6; }
-    .under-actions { display: flex; justify-content: flex-end; margin-top: 8px; gap: 8px; }
+    .under-actions { display: flex; justify-content: flex-start; margin-top: 8px; gap: 8px; }
 
     .stats { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
     .card { padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
@@ -70,11 +71,11 @@
 
     footer { color: var(--muted); text-align: center; padding: 24px 12px; }
 
-    /* Modal Ad after paste */
     #adModal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.5); z-index: 9999; }
     .ad-wrap { width: min(720px, 92vw); background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden; }
     .ad-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-    .ad-body { height: 320px; display: flex; align-items: center; justify-content: center; }
+    .ad-body { height: 320px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .ad-body img { width: 100%; height: 100%; object-fit: cover; }
   </style>
 </head>
 <body>
@@ -87,14 +88,15 @@
       <div class="controls">
         <label for="lang" class="sr-only" style="position:absolute;left:-9999px">Language</label>
         <select id="lang" aria-label="Language"></select>
-        <button id="pasteBtn" class="primary" type="button">Paste text</button>
       </div>
     </div>
   </header>
 
   <main>
     <div class="container">
-      <div id="adTop" class="ad-slot">Top banner (e.g., 970×90 / responsive)</div>
+      <div id="adTop" class="ad-slot">
+        <img alt="Brand banner" src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 970 90'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%232563eb'/%3E%3Cstop offset='1' stop-color='%239333ea'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='970' height='90' rx='12' fill='url(%23g)'/%3E%3Ctext x='40' y='56' font-family='system-ui' font-size='28' fill='white' opacity='.92'%3ETypestats%20—%20Accurate%20Multilingual%20Counter%3C/text%3E%3C/svg%3E">
+      </div>
 
       <div class="hero">
         <div class="hero-card">
@@ -116,25 +118,32 @@
       </div>
 
       <div class="panel">
+        <div class="row">
+          <button id="pasteBtnTop" class="primary" type="button">Paste text</button>
+        </div>
+
         <textarea id="textInput" placeholder="Type or paste your text…"></textarea>
         <div class="under-actions">
           <button id="clearBtn" type="button">Clear</button>
         </div>
 
-        <div id="adInline" class="ad-slot">Inline banner (in-article responsive)</div>
+        <div id="adInline" class="ad-slot">
+          <img alt="Inline banner" src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 728 90'%3E%3Cdefs%3E%3ClinearGradient id='g2' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%23eef2ff'/%3E%3Cstop offset='1' stop-color='%23e0e7ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='728' height='90' rx='12' fill='url(%23g2)'/%3E%3Ctext x='364' y='54' text-anchor='middle' font-family='system-ui' font-size='20' fill='%23475569'%3EBeautiful%20placeholder%20banner%3C/text%3E%3C/svg%3E">
+        </div>
 
         <div id="result" style="margin-top: 12px;"></div>
 
-        <div id="adFooter" class="ad-slot">Bottom banner (mobile 320×50 / 300×250)</div>
+        <div id="adFooter" class="ad-slot">
+          <img alt="Footer banner" src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 728 90'%3E%3Cdefs%3E%3ClinearGradient id='g3' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%23f1f5f9'/%3E%3Cstop offset='1' stop-color='%23e2e8f0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='728' height='90' rx='12' fill='url(%23g3)'/%3E%3Ctext x='364' y='54' text-anchor='middle' font-family='system-ui' font-size='18' fill='%2394a3b8'%3EAd%20Placeholder%20%7C%20Typestats%3C/text%3E%3C/svg%3E">
+        </div>
       </div>
     </div>
   </main>
 
   <footer>
-    © 2025 Typestats. All rights reserved.
+    © 2025 Type Stats. All rights reserved.
   </footer>
 
-  <!-- Modal Ad (shown after paste; close to view results) -->
   <div id="adModal">
     <div class="ad-wrap">
       <div class="ad-head">
@@ -142,14 +151,12 @@
         <button id="adClose" type="button" style="padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:transparent;cursor:pointer">Close</button>
       </div>
       <div class="ad-body">
-        <!-- Replace with your ad tag (e.g., Google Ad Manager / AdSense) -->
-        <div style="color:var(--muted)">Your advertisement goes here</div>
+        <img alt="Modal banner" src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 540'%3E%3Cdefs%3E%3ClinearGradient id='gm' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%232563eb'/%3E%3Cstop offset='1' stop-color='%239333ea'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1280' height='540' fill='url(%23gm)'/%3E%3Ccircle cx='1040' cy='120' r='160' fill='rgba(255,255,255,0.08)'/%3E%3Ccircle cx='220' cy='420' r='180' fill='rgba(255,255,255,0.06)'/%3E%3Ctext x='50%' y='52%' text-anchor='middle' font-family='system-ui' font-size='38' fill='white' opacity='.95'%3EYour%20Ad%20Here%3C/text%3E%3C/svg%3E">
       </div>
     </div>
   </div>
 
   <script>
-    // Mild obfuscation for some regex tokens (optional)
     const RX = {
       punct: /\p{P}/gu,
       latin: /[A-Za-z]/g,
@@ -166,7 +173,6 @@
       hebr: /\p{Script=Hebrew}/gu
     };
 
-    // UI strings
     const i18n = {
       ui: {
         en:{title:'Character Counter',subtitle:'Paste text to analyze multilingual counts accurately.',paste:'Paste text',clear:'Clear',placeholder:'Type or paste your text…',hi1:'Accurate',hi1s:'Counts letters, words, digits, punctuation by script.',hi2:'Smart rules',hi2s:'Korean-dominant rule else unified rule.'},
@@ -228,13 +234,13 @@
       document.getElementById('brand').textContent = u.title;
       document.getElementById('title').textContent = u.title;
       document.getElementById('subtitle').textContent = u.subtitle;
-      document.getElementById('pasteBtn').textContent = u.paste;
-      document.getElementById('clearBtn').textContent = u.clear;
       document.getElementById('textInput').placeholder = u.placeholder;
       document.getElementById('hi1').textContent = u.hi1;
       document.getElementById('hi1s').textContent = u.hi1s;
       document.getElementById('hi2').textContent = u.hi2;
       document.getElementById('hi2s').textContent = u.hi2s;
+      document.getElementById('pasteBtnTop').textContent = u.paste;
+      document.getElementById('clearBtn').textContent = u.clear;
       onInput();
     }
 
@@ -269,31 +275,20 @@
       let primary = { key: null, count: 0 };
       for (const [k, v] of Object.entries(counts)) if (v > primary.count) primary = { key: k, count: v };
 
-      // Display choice for English
       const englishDisplay = (primary.key === 'Korean') ? englishLetters : englishWords;
 
-      // Sum of all detected scripts + English (choose letters for Korean-dominant, words for non-Korean in total)
       const sumScripts = Object.values(counts).reduce((a,b)=>a+b,0);
       const englishForTotal = (primary.key === 'Korean') ? englishLetters : englishWords;
       const allLanguagesUnits = sumScripts + englishForTotal;
-
       const total = (primary.key === 'Korean') ? noSpaces.length : (allLanguagesUnits + digits);
 
-      const lines = countNonEmptyLines(text);
-      const spaces = (text.match(/\s/g) || []).length;
-
-      return {
-        uiLang, counts, primary,
-        englishDisplay, englishWords, englishLetters,
-        digits, punct, total
-      };
+      return { uiLang, counts, primary, englishDisplay, englishWords, digits, punct, total };
     }
 
     function render(stats) {
       const L = i18n.labels[stats.uiLang] || i18n.labels.en;
       const englishLabel = (stats.primary.key === 'Korean') ? L.enLetters : L.enWords;
 
-      // Script cards
       const scriptCards = Object.entries(stats.counts)
         .filter(([, v]) => v > 0)
         .map(([k, v]) => {
@@ -301,15 +296,10 @@
           return `<div class="card"><div class="label">${L.scriptChars(nameLoc)}</div><div class="value">${v.toLocaleString()}</div></div>`;
         }).join('');
 
-      // Total label: when non-Korean-dominant, show components explicitly
       let totalLabel = L.total;
       if (stats.primary.key !== 'Korean') {
         const comp = [];
-        // all detected languages (localized names). English uses "English words" label.
-        for (const [k, v] of Object.entries(stats.counts)) {
-          if (v > 0) comp.push(localScriptName(k, stats.uiLang));
-        }
-        // Add English words if present (by words count)
+        for (const [k, v] of Object.entries(stats.counts)) if (v > 0) comp.push(localScriptName(k, stats.uiLang));
         if (stats.englishWords > 0) comp.push(englishLabel);
         comp.push(L.digits);
         totalLabel = `Total (${comp.join(' + ')}, no punctuation)`;
@@ -320,7 +310,7 @@
           ${scriptCards}
           <div class="card"><div class="label">${englishLabel}</div><div class="value">${stats.englishDisplay.toLocaleString()}</div></div>
           <div class="card"><div class="label">${L.digits}</div><div class="value">${stats.digits.toLocaleString()}</div></div>
-          <div class="card"><div class="label">${L.punct}</div><div class="value">${0 .toLocaleString()}</div></div>
+          <div class="card"><div class="label">${L.punct}</div><div class="value">${stats.punct.toLocaleString()}</div></div>
           <div class="card"><div class="label">${totalLabel}</div><div class="value">${stats.total.toLocaleString()}</div></div>
         </div>
       `;
@@ -329,22 +319,26 @@
     async function pasteText() {
       const el = document.getElementById('textInput');
       try {
-        const clip = await navigator.clipboard.readText();
+        let clip = await navigator.clipboard.readText();
+        clip = clip.replace(/\r\n?/g, '\n').replace(/^\s*\n+/, '').replace(/\n{3,}/g, '\n\n');
         const start = el.selectionStart ?? el.value.length;
         const end = el.selectionEnd ?? el.value.length;
         el.value = el.value.slice(0, start) + clip + el.value.slice(end);
       } catch {
         const fallback = prompt('Paste is not allowed by the browser.\nPlease paste your content here:');
-        if (fallback !== null) el.value += (el.value ? '\n' : '') + fallback;
+        if (fallback !== null) {
+          const cleaned = fallback.replace(/\r\n?/g, '\n').replace(/^\s*\n+/, '').replace(/\n{3,}/g, '\n\n');
+          el.value += (el.value ? '\n' : '') + cleaned;
+        }
       }
-      showAdAfterPaste(); // block results with ad until closed
+      el.scrollTop = 0;
+      showAdAfterPaste();
       el.focus();
     }
 
     function clearText() {
       const el = document.getElementById('textInput');
       el.value = '';
-      // immediate clear rendering
       document.getElementById('result').innerHTML = '';
       el.focus();
     }
@@ -359,7 +353,6 @@
       }, 60);
     }
 
-    // Ad modal: after paste, once per session
     function showAdAfterPaste() {
       const k = 'ad_shown_after_paste_v1';
       if (sessionStorage.getItem(k)) { onInput(); return; }
@@ -372,51 +365,29 @@
       };
     }
 
-    // Init
     window.addEventListener('DOMContentLoaded', () => {
-      // Language selector in requested order
       const sel = document.getElementById('lang');
-      sel.innerHTML = langOrder.map(code => {
-        const label = ({
-          en:'English', ko:'한국어', 'zh-CN':'中文(简体)', 'zh-TW':'中文(繁體)', ja:'日本語',
-          th:'ภาษาไทย', vi:'Tiếng Việt', ru:'Русский', ar:'العربية', fr:'Français',
-          de:'Deutsch', es:'Español', pt:'Português'
-        })[code] || code;
+      sel.innerHTML = ['en','ko','zh-CN','zh-TW','ja','th','vi','ru','ar','fr','de','es','pt'].map(code => {
+        const label = ({en:'English',ko:'한국어','zh-CN':'中文(简体)','zh-TW':'中文(繁體)',ja:'日本語',th:'ภาษาไทย',vi:'Tiếng Việt',ru:'Русский',ar:'العربية',fr:'Français',de:'Deutsch',es:'Español',pt:'Português'})[code];
         return `<option value="${code}">${label}</option>`;
       }).join('');
       sel.value = 'en';
       sel.addEventListener('change', () => setUILanguage(sel.value));
 
-      document.getElementById('pasteBtn').addEventListener('click', pasteText);
+      document.getElementById('pasteBtnTop').addEventListener('click', pasteText);
       document.getElementById('clearBtn').addEventListener('click', clearText);
       document.getElementById('textInput').addEventListener('input', onInput);
 
       setUILanguage('en');
     });
 
-    // Optional: lock content to your domain (typestats)
     (function lockToDomain() {
       const allowed = ['typestats', 'localhost', '127.0.0.1'];
       const host = location.hostname || '';
       if (!allowed.some(a => host.includes(a))) {
-        // Disable ad modal and analytics on unapproved hosts
         const modal = document.getElementById('adModal'); if (modal) modal.remove();
       }
     })();
   </script>
-<script>
-  function fillPlaceholder(id, text) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-weight:700;">${text}</div>`;
-  }
-  window.addEventListener('DOMContentLoaded', () => {
-    fillPlaceholder('adTop', 'Top Banner Placeholder');
-    fillPlaceholder('adInline', 'Inline Banner Placeholder');
-    fillPlaceholder('adFooter', 'Bottom Banner Placeholder');
-    const modalBody = document.querySelector('#adModal .ad-body');
-    if (modalBody) modalBody.innerHTML = '<div style="color:#94a3b8;font-weight:700;">Modal Ad Placeholder</div>';
-  });
-</script>
 </body>
 </html>
