@@ -26,6 +26,12 @@
         --accent: #60a5fa; --accent-2: #c084fc;
         --ad-bg: #0f172aaa;
       }
+      .brand-text { 
+        background: linear-gradient(135deg, #60a5fa, #22d3ee);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; height: 100%; }
@@ -42,8 +48,16 @@
       border-bottom: 1px solid var(--border);
     }
     .nav { max-width: 1200px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .2px; }
-    .brand-badge { background: linear-gradient(135deg, var(--accent), var(--accent-2)); width: 28px; height: 28px; border-radius: 7px; box-shadow: 0 4px 18px rgba(37,99,235,.35); }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .2px; }
+    .brand-logo { height: 32px; width: auto; }
+    .brand-text { 
+      background: linear-gradient(135deg, #1e40af, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.4em;
+      font-weight: 800;
+    }
     .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     select, button { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; }
     button.primary { background: var(--accent); color: #fff; border-color: transparent; }
@@ -85,8 +99,29 @@
   <header>
     <div class="nav">
       <div class="brand">
-        <div class="brand-badge"></div>
-        <div id="brand">Character Counter</div>
+        <svg class="brand-logo" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+          <!-- Document Icon -->
+          <rect x="2" y="4" width="16" height="20" rx="2" fill="#1e40af" stroke="#1e40af" stroke-width="0.5"/>
+          <rect x="4" y="6" width="12" height="1.5" fill="white" opacity="0.8"/>
+          <rect x="4" y="8.5" width="12" height="1.5" fill="white" opacity="0.8"/>
+          <rect x="4" y="11" width="12" height="1.5" fill="white" opacity="0.8"/>
+          <rect x="4" y="13.5" width="8" height="1.5" fill="white" opacity="0.6"/>
+          <rect x="4" y="16" width="10" height="1.5" fill="white" opacity="0.6"/>
+          <rect x="4" y="18.5" width="6" height="1.5" fill="white" opacity="0.4"/>
+          
+          <!-- TypeStats Text -->
+          <text x="24" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#1e40af">Type</text>
+          <text x="24" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="url(#gradient)">Stats</text>
+          
+          <!-- Gradient Definition -->
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div id="brand" class="brand-text">Character Counter</div>
       </div>
       <div class="controls">
         <label for="lang" class="sr-only" style="position:absolute;left:-9999px">Language</label>
