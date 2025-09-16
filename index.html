@@ -104,6 +104,23 @@
 
     .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; margin-bottom: 20px; }
     @media (max-width: 960px) { .hero { grid-template-columns: 1fr; gap: 16px; } }
+    
+    .hero-feature {
+      padding: 12px;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      text-align: center;
+    }
+    .hero-feature-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+      font-size: 0.95em;
+    }
+    .hero-feature-desc {
+      font-size: 0.85em;
+      line-height: 1.3;
+      color: var(--muted);
+    }
     .hero-card { 
       background: var(--card); 
       border: 1px solid var(--border); 
@@ -127,8 +144,8 @@
       height: 2px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
     }
-    .title { font-size: 24px; font-weight: 800; margin: 0 0 8px; }
-    .subtitle { color: var(--muted); margin: 0; line-height: 1.5; }
+    .title { font-size: 22px; font-weight: 800; margin: 0 0 8px; }
+    .subtitle { color: var(--muted); margin: 0; line-height: 1.4; font-size: 0.95em; }
 
     .panel { 
       background: var(--card); 
@@ -253,14 +270,14 @@
           <p class="subtitle" id="subtitle">Paste text to analyze multilingual counts accurately.</p>
         </div>
         <div class="hero-card">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div style="padding:12px;border:1px dashed var(--border);border-radius:12px;">
-              <div style="font-weight:700;margin-bottom:4px" id="hi1">Accurate</div>
-              <div class="subtitle" id="hi1s">Counts letters, words, digits, punctuation by script.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="hero-feature">
+              <div class="hero-feature-title" id="hi1">Accurate</div>
+              <div class="hero-feature-desc" id="hi1s">Counts letters, words, digits, punctuation by language.</div>
             </div>
-            <div style="padding:12px;border:1px dashed var(--border);border-radius:12px;">
-              <div style="font-weight:700;margin-bottom:4px" id="hi2">Smart rules</div>
-              <div class="subtitle" id="hi2s">Korean-dominant rule else unified rule.</div>
+            <div class="hero-feature">
+              <div class="hero-feature-title" id="hi2">Smart rules</div>
+              <div class="hero-feature-desc" id="hi2s">Korean-dominant rule, otherwise unified rule.</div>
             </div>
           </div>
         </div>
@@ -357,10 +374,10 @@
     // i18n (UI + labels + script names)
     const i18n = {
       ui: {
-        en:{title:'Character Counter',subtitle:'Paste text to analyze multilingual counts accurately.',paste:'Paste text',clear:'Clear',placeholder:'Type or paste your text…',hi1:'Accurate',hi1s:'Counts letters, words, digits, punctuation by script.',hi2:'Smart rules',hi2s:'Korean-dominant rule else unified rule.'},
-        ko:{title:'글자수 세기',subtitle:'텍스트를 붙여넣어 다국어 글자수를 정확히 분석합니다.',paste:'텍스트 붙여넣기',clear:'지우기',placeholder:'텍스트를 입력하거나 붙여넣으세요…',hi1:'정확한 집계',hi1s:'스크립트별 글자·단어·숫자·문장부호 집계.',hi2:'스마트 규칙',hi2s:'한국어 최다 시 특수 규칙, 그 외 통일 규칙.'},
-        'zh-CN':{title:'字符统计',subtitle:'粘贴文本以准确分析多语言统计。',paste:'粘贴文本',clear:'清空',placeholder:'输入或粘贴文本…',hi1:'准确统计',hi1s:'按脚本统计字母/单词/数字/标点。',hi2:'智能规则',hi2s:'韩文占主时特殊规则，其他统一。'},
-        'zh-TW':{title:'字元統計',subtitle:'貼上文字以精準分析多語統計。',paste:'貼上文字',clear:'清除',placeholder:'輸入或貼上文字…',hi1:'精準統計',hi1s:'依腳本統計字母/單字/數字/標點。',hi2:'智慧規則',hi2s:'韓文為主時特殊規則，其他統一。'},
+        en:{title:'Character Counter',subtitle:'Paste text to analyze multilingual counts accurately.',paste:'Paste text',clear:'Clear',placeholder:'Type or paste your text…',hi1:'Accurate',hi1s:'Counts letters, words, digits, punctuation by language.',hi2:'Smart rules',hi2s:'Korean-dominant rule, otherwise unified rule.'},
+        ko:{title:'글자수 세기',subtitle:'텍스트를 붙여넣어 다국어 글자수를 정확히 분석합니다.',paste:'텍스트 붙여넣기',clear:'지우기',placeholder:'텍스트를 입력하거나 붙여넣으세요…',hi1:'정확한 집계',hi1s:'언어별 글자·단어·숫자·문장부호 집계.',hi2:'스마트 규칙',hi2s:'한국어 최다 시 특수 규칙, 그 외 통일 규칙.'},
+        'zh-CN':{title:'字数统计',subtitle:'粘贴文本以准确分析多语言统计。',paste:'粘贴文本',clear:'清空',placeholder:'输入或粘贴文本…',hi1:'准确统计',hi1s:'按语言统计字母/单词/数字/标点。',hi2:'智能规则',hi2s:'韩文占主时特殊规则，其他统一。'},
+        'zh-TW':{title:'字数統計',subtitle:'貼上文字以精準分析多語統計。',paste:'貼上文字',clear:'清除',placeholder:'輸入或貼上文字…',hi1:'精準統計',hi1s:'依語言統計字母/單字/數字/標點。',hi2:'智慧規則',hi2s:'韓文為主時特殊規則，其他統一。'},
         ja:{title:'文字数カウンター',subtitle:'テキストを貼り付けて多言語を正確に分析。',paste:'テキストを貼り付け',clear:'クリア',placeholder:'テキストを入力/貼り付け…',hi1:'高精度',hi1s:'スクリプト別に文字/単語/数字/句読点を集計。',hi2:'スマート規則',hi2s:'韓国語最多時は特別規則、それ以外は統一。'},
         th:{title:'ตัวนับอักขระ',subtitle:'วางข้อความเพื่อวิเคราะห์หลายภาษาอย่างแม่นยำ',paste:'วางข้อความ',clear:'ล้าง',placeholder:'พิมพ์หรือวางข้อความ…',hi1:'แม่นยำ',hi1s:'นับตัวอักษร คำ ตัวเลข เครื่องหมายวรรคตอน',hi2:'กฎอัจฉริยะ',hi2s:'ถ้าเกาหลีมากสุดใช้กฎพิเศษ ไม่งั้นกฎเดียวกัน'},
         vi:{title:'Bộ đếm ký tự',subtitle:'Dán văn bản để phân tích đa ngôn ngữ chính xác.',paste:'Dán văn bản',clear:'Xóa',placeholder:'Nhập hoặc dán văn bản…',hi1:'Chính xác',hi1s:'Đếm chữ, từ, số, dấu câu theo bảng chữ.',hi2:'Quy tắc thông minh',hi2s:'Hàn Quốc chiếm đa số dùng quy tắc riêng, khác thì thống nhất.'},
@@ -374,13 +391,13 @@
       labels: {
         en:{scriptChars:n=>`${n} characters`,enLetters:'English letters',enWords:'English words',digits:'Digits',punct:'Punctuation',total:'Total (no spaces)',noPunct:'no punctuation'},
         ko:{scriptChars:n=>`${n} 글자수`,enLetters:'영어 글자수',enWords:'영어 단어 수',digits:'숫자',punct:'문장부호',total:'전체 글자수 (공백 제외)',noPunct:'문장부호 제외'},
-        'zh-CN':{scriptChars:n=>`${n} 字符数`,enLetters:'英文字母数',enWords:'英文单词数',digits:'数字',punct:'标点符号',total:'总字符数（去空白）',noPunct:'不含标点'},
-        'zh-TW':{scriptChars:n=>`${n} 字元數`,enLetters:'英文字母數',enWords:'英文單字數',digits:'數字',punct:'標點符號',total:'總字元數（去空白）',noPunct:'不含標點'},
+        'zh-CN':{scriptChars:n=>`${n} 字数`,enLetters:'英文字母数',enWords:'英文单词数',digits:'数字',punct:'标点符号',total:'总字数（去空白）',noPunct:'不含标点'},
+        'zh-TW':{scriptChars:n=>`${n} 字数`,enLetters:'英文字母數',enWords:'英文單字數',digits:'數字',punct:'標點符號',total:'總字数（去空白）',noPunct:'不含標點'},
         ja:{scriptChars:n=>`${n} 文字数`,enLetters:'英語の文字数',enWords:'英語の単語数',digits:'数字',punct:'句読点',total:'総文字数（空白除く）',noPunct:'句読点除く'},
-        th:{scriptChars:n=>`อักขระภาษา${n}`,enLetters:'ตัวอักษรอังกฤษ',enWords:'คำภาษาอังกฤษ',digits:'ตัวเลข',punct:'เครื่องหมายวรรคตอน',total:'รวม (ไม่รวมช่องว่าง)',noPunct:'ไม่รวมเครื่องหมาย'},
-        vi:{scriptChars:n=>`Ký tự ${n}`,enLetters:'Chữ cái tiếng Anh',enWords:'Từ tiếng Anh',digits:'Chữ số',punct:'Dấu câu',total:'Tổng (không tính khoảng trắng)',noPunct:'không tính dấu câu'},
-        ru:{scriptChars:n=>`Символы: ${n}`,enLetters:'Английские буквы',enWords:'Английские слова',digits:'Цифры',punct:'Знаки препинания',total:'Всего (без пробелов)',noPunct:'без пунктуации'},
-        ar:{scriptChars:n=>`أحرف ${n}`,enLetters:'حروف إنجليزية',enWords:'كلمات إنجليزية',digits:'أرقام',punct:'علامات ترقيم',total:'الإجمالي (بدون مسافات)',noPunct:'بدون ترقيم'},
+        th:{scriptChars:n=>`${n} ตัวอักษร`,enLetters:'ตัวอักษรอังกฤษ',enWords:'คำภาษาอังกฤษ',digits:'ตัวเลข',punct:'เครื่องหมายวรรคตอน',total:'รวม (ไม่รวมช่องว่าง)',noPunct:'ไม่รวมเครื่องหมาย'},
+        vi:{scriptChars:n=>`${n} ký tự`,enLetters:'Chữ cái tiếng Anh',enWords:'Từ tiếng Anh',digits:'Chữ số',punct:'Dấu câu',total:'Tổng (không tính khoảng trắng)',noPunct:'không tính dấu câu'},
+        ru:{scriptChars:n=>`${n} символов`,enLetters:'Английские буквы',enWords:'Английские слова',digits:'Цифры',punct:'Знаки препинания',total:'Всего (без пробелов)',noPunct:'без пунктуации'},
+        ar:{scriptChars:n=>`${n} حرف`,enLetters:'حروف إنجليزية',enWords:'كلمات إنجليزية',digits:'أرقام',punct:'علامات ترقيم',total:'الإجمالي (بدون مسافات)',noPunct:'بدون ترقيم'},
         fr:{scriptChars:n=>`${n} caractères`,enLetters:'Lettres anglaises',enWords:'Mots anglais',digits:'Chiffres',punct:'Ponctuation',total:'Total (sans espaces)',noPunct:'sans ponctuation'},
         de:{scriptChars:n=>`${n} Zeichen`,enLetters:'Englische Buchstaben',enWords:'Englische Wörter',digits:'Ziffern',punct:'Zeichensetzung',total:'Gesamt (ohne Leerzeichen)',noPunct:'ohne Interpunktion'},
         es:{scriptChars:n=>`${n} caracteres`,enLetters:'Letras en inglés',enWords:'Palabras en inglés',digits:'Dígitos',punct:'Puntuación',total:'Total (sin espacios)',noPunct:'sin puntuación'},
