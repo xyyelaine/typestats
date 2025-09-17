@@ -764,13 +764,21 @@
     }
 
     // Always show modal after paste (every time)
+    // TEMPORARILY DISABLED FOR ADSENSE APPROVAL
+    // TO RE-ENABLE AFTER ADSENSE APPROVAL:
+    // 1. Uncomment the modal code below
+    // 2. Comment out the onInput() call
     function showAdAfterPaste() {
-      const modal = document.getElementById('adModal');
-      modal.style.display = 'flex';
-      document.getElementById('adClose').onclick = () => {
-        modal.style.display = 'none';
-        onInput();
-      };
+      // RE-ENABLE AFTER ADSENSE APPROVAL:
+      // const modal = document.getElementById('adModal');
+      // modal.style.display = 'flex';
+      // document.getElementById('adClose').onclick = () => {
+      //   modal.style.display = 'none';
+      //   onInput();
+      // };
+      
+      // TEMPORARY: Just trigger input analysis without popup
+      onInput();
     }
 
     // Browser language detection
@@ -843,7 +851,7 @@
         const pos = start + cleaned.length;
         ta.setSelectionRange?.(pos, pos);
         ta.scrollTop = 0;
-        showAdAfterPaste();
+        showAdAfterPaste(); // Will just trigger analysis, no popup
         ta.focus();
       }, { capture: true });
 
