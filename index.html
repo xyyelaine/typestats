@@ -431,6 +431,7 @@
       <div id="navCenterText" class="nav-center">AI-powered Multilingual Character Counter</div>
       <div class="controls">
         <a href="/about.html" target="_blank" rel="noopener noreferrer" class="about-link" style="margin-right: 16px; color: #2563eb; text-decoration: none; font-weight: 500; transition: color 0.3s;">About</a>
+        <button id="contactBtn" class="contact-btn" style="margin-right: 16px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,.05);">Contact</button>
         <label for="lang" class="sr-only" style="position:absolute;left:-9999px">Language</label>
         <select id="lang" aria-label="Language"></select>
       </div>
@@ -540,6 +541,36 @@
     </div>
   </div>
 
+  <!-- Contact Modal -->
+  <div id="contactModal" style="position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.5); z-index: 9999;">
+    <div class="contact-wrap" style="width: min(500px, 90vw); background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden;">
+      <div class="contact-head" style="padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin: 0; font-weight: 700; color: var(--text);">Contact Developer</h3>
+        <button id="contactClose" type="button" style="padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: transparent; cursor: pointer; color: var(--text);">✕</button>
+      </div>
+      <div class="contact-body" style="padding: 24px;">
+        <form id="contactForm">
+          <div style="margin-bottom: 16px;">
+            <label for="contactEmail" style="display: block; margin-bottom: 6px; font-weight: 500; color: var(--text);">Email *</label>
+            <input type="email" id="contactEmail" required style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--text); font-size: 14px; box-sizing: border-box;">
+          </div>
+          <div style="margin-bottom: 16px;">
+            <label for="contactPhone" style="display: block; margin-bottom: 6px; font-weight: 500; color: var(--text);">Phone (Optional)</label>
+            <input type="tel" id="contactPhone" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--text); font-size: 14px; box-sizing: border-box;">
+          </div>
+          <div style="margin-bottom: 20px;">
+            <label for="contactMessage" style="display: block; margin-bottom: 6px; font-weight: 500; color: var(--text);">Message *</label>
+            <textarea id="contactMessage" required rows="4" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--text); font-size: 14px; resize: vertical; box-sizing: border-box; font-family: inherit;"></textarea>
+          </div>
+          <div style="display: flex; gap: 12px; justify-content: flex-end;">
+            <button type="button" id="contactCancel" style="padding: 12px 20px; border: 1px solid var(--border); border-radius: 8px; background: transparent; color: var(--text); cursor: pointer; font-weight: 500;">Cancel</button>
+            <button type="submit" style="padding: 12px 20px; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; cursor: pointer; font-weight: 500; box-shadow: 0 4px 12px rgba(37,99,235,.3);">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Basic regexes
     const RX = {
@@ -570,8 +601,8 @@
     // i18n (UI + labels + script names)
     const i18n = {
       ui: {
-        en:{title:'Multilingual Character Counter',subtitle:'Analyze scripts with language-specific intelligence—accurate counts for Korean, Chinese, English, and more.',paste:'Paste text',clear:'Clear',placeholder:'Type or paste your text…',hi1:'AI Precision',hi1s:'Language-aware counts for characters, words, digits, and punctuation—tailored for each script.',hi2:'Smart Rules',hi2s:'Applies Korean-focused or multilingual rules dynamically. Perfect for bilingual scripts.',brand:'AI-powered Multilingual Character Counter',analysisTool:'Multilingual Text Analyzer',textInputLabel:'Automatically detects languages and counts characters by language with AI precision.'},
-        ko:{title:'다국어 글자수세기',subtitle:'AI가 계산하는 정확한 글자수, 콘텐츠 품질의 시작입니다.',paste:'텍스트 붙여넣기',clear:'지우기',placeholder:'텍스트를 입력하거나 붙여넣으세요…',hi1:'AI 정밀도',hi1s:'언어별 글자·단어·숫자·문장부호 집계.',hi2:'스마트 규칙',hi2s:'한국어 최다 시 특수 규칙, 그 외 통일 규칙.',brand:'언어별 규칙에 맞춘 AI 기반 글자수 분석기',analysisTool:'다국어 텍스트 분석기',textInputLabel:'AI가 텍스트 속 언어를 자동으로 감지하고, 언어별로 정확하게 글자 수를 분석합니다.'},
+        en:{title:'Multilingual Character Counter',subtitle:'Analyze scripts with language-specific intelligence—accurate counts for Korean, Chinese, English, and more.',paste:'Paste text',clear:'Clear',placeholder:'Type or paste your text…',hi1:'AI Precision',hi1s:'Language-aware counts for characters, words, digits, and punctuation—tailored for each script.',hi2:'Smart Rules',hi2s:'Applies Korean-focused or multilingual rules dynamically. Perfect for bilingual scripts.',brand:'AI-powered Multilingual Character Counter',analysisTool:'Multilingual Text Analyzer',textInputLabel:'Automatically detects languages and counts characters by language with AI precision.',contact:'Contact',contactTitle:'Contact Developer',contactEmail:'Email *',contactPhone:'Phone (Optional)',contactMessage:'Message *',contactCancel:'Cancel',contactSend:'Send Message',contactSuccess:'Your email client will open with the message. Please send the email to complete your inquiry.'},
+        ko:{title:'다국어 글자수세기',subtitle:'AI가 계산하는 정확한 글자수, 콘텐츠 품질의 시작입니다.',paste:'텍스트 붙여넣기',clear:'지우기',placeholder:'텍스트를 입력하거나 붙여넣으세요…',hi1:'AI 정밀도',hi1s:'언어별 글자·단어·숫자·문장부호 집계.',hi2:'스마트 규칙',hi2s:'한국어 최다 시 특수 규칙, 그 외 통일 규칙.',brand:'언어별 규칙에 맞춘 AI 기반 글자수 분석기',analysisTool:'다국어 텍스트 분석기',textInputLabel:'AI가 텍스트 속 언어를 자동으로 감지하고, 언어별로 정확하게 글자 수를 분석합니다.',contact:'연락하기',contactTitle:'개발자에게 연락하기',contactEmail:'이메일 *',contactPhone:'연락처 (선택사항)',contactMessage:'문의 내용 *',contactCancel:'취소',contactSend:'메시지 보내기',contactSuccess:'이메일 클라이언트가 열립니다. 이메일을 보내주시면 문의가 완료됩니다.'},
         'zh-CN':{title:'多语言字符统计专家',subtitle:'基于语言识别的AI引擎，精准统计韩语、中文、英语等多语脚本中的字数或单词。',paste:'粘贴文本',clear:'清空',placeholder:'输入或粘贴文本…',hi1:'AI精准解析',hi1s:'按语言类型智能识别字数、词语、数字与符号，确保每一项统计结果准确可靠。',hi2:'智能统计规则',hi2s:'灵活切换韩语优先或统一标准，专为双语及多语言剧本优化设计。',brand:'AI智能驱动的多语言字数统计工具',analysisTool:'多语言文本分析器',textInputLabel:'通过 AI 自动识别语言，并按语言类型精准统计字数。'},
         'zh-TW':{title:'多語文字元統計專家',subtitle:'基於語言識別的AI引擎，精準統計韓語、中文、英語等多語腳本中的字數或單詞。',paste:'貼上文字',clear:'清除',placeholder:'輸入或貼上文字…',hi1:'AI精準解析',hi1s:'按語言類型智能識別字數、詞語、數字與符號，確保每一項統計結果準確可靠。',hi2:'智能統計規則',hi2s:'靈活切換韓語優先或統一標準，專為雙語及多語言劇本優化設計。',brand:'AI智能驅動的多語言字數統計工具',analysisTool:'多語言文本分析器',textInputLabel:'透過 AI 自動偵測語言，並依語言類型精準統計字數。'},
         ja:{title:'多言語文字数カウンター',subtitle:'言語固有の知能でスクリプトを分析——韓国語、中国語、英語など正確なカウント。',paste:'テキストを貼り付け',clear:'クリア',placeholder:'テキストを入力/貼り付け…',hi1:'AI精密',hi1s:'各スクリプトに合わせた文字、単語、数字、句読点の言語認識カウント。',hi2:'スマート規則',hi2s:'韓国語重点または多言語規則を動的に適用。バイリンガルスクリプトに最適。',brand:'AI駆動多言語文字数カウンター',analysisTool:'多言語テキストアナライザー',textInputLabel:'AI が言語を自動検出し、言語ごとに正確な文字数をカウントします。'},
@@ -643,6 +674,28 @@
       }
       if (document.getElementById('textInputLabel')) {
         document.getElementById('textInputLabel').textContent = u.textInputLabel || 'Enter text to analyze';
+      }
+      // Update contact button and modal
+      if (document.getElementById('contactBtn')) {
+        document.getElementById('contactBtn').textContent = u.contact || 'Contact';
+      }
+      if (document.querySelector('.contact-head h3')) {
+        document.querySelector('.contact-head h3').textContent = u.contactTitle || 'Contact Developer';
+      }
+      if (document.querySelector('label[for="contactEmail"]')) {
+        document.querySelector('label[for="contactEmail"]').textContent = u.contactEmail || 'Email *';
+      }
+      if (document.querySelector('label[for="contactPhone"]')) {
+        document.querySelector('label[for="contactPhone"]').textContent = u.contactPhone || 'Phone (Optional)';
+      }
+      if (document.querySelector('label[for="contactMessage"]')) {
+        document.querySelector('label[for="contactMessage"]').textContent = u.contactMessage || 'Message *';
+      }
+      if (document.getElementById('contactCancel')) {
+        document.getElementById('contactCancel').textContent = u.contactCancel || 'Cancel';
+      }
+      if (document.querySelector('#contactForm button[type="submit"]')) {
+        document.querySelector('#contactForm button[type="submit"]').textContent = u.contactSend || 'Send Message';
       }
       onInput();
     }
@@ -860,6 +913,64 @@
       // Logo home link
       document.getElementById('logoHome').addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Contact modal functionality
+      const contactModal = document.getElementById('contactModal');
+      const contactBtn = document.getElementById('contactBtn');
+      const contactClose = document.getElementById('contactClose');
+      const contactCancel = document.getElementById('contactCancel');
+      const contactForm = document.getElementById('contactForm');
+
+      // Open contact modal
+      contactBtn.addEventListener('click', () => {
+        contactModal.style.display = 'flex';
+      });
+
+      // Close contact modal
+      function closeContactModal() {
+        contactModal.style.display = 'none';
+        contactForm.reset();
+      }
+
+      contactClose.addEventListener('click', closeContactModal);
+      contactCancel.addEventListener('click', closeContactModal);
+
+      // Close modal when clicking outside
+      contactModal.addEventListener('click', (e) => {
+        if (e.target === contactModal) {
+          closeContactModal();
+        }
+      });
+
+      // Handle form submission
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('contactEmail').value;
+        const phone = document.getElementById('contactPhone').value;
+        const message = document.getElementById('contactMessage').value;
+        
+        // Create mailto link
+        const subject = encodeURIComponent('TypeStats Contact Form');
+        const body = encodeURIComponent(
+          `Email: ${email}\n` +
+          `Phone: ${phone || 'Not provided'}\n\n` +
+          `Message:\n${message}`
+        );
+        
+        const mailtoLink = `mailto:xyyelaine@gmail.com?subject=${subject}&body=${body}`;
+        
+        // Open email client
+        window.location.href = mailtoLink;
+        
+        // Show success message
+        const currentLang = document.getElementById('lang').value;
+        const successMsg = i18n.ui[currentLang]?.contactSuccess || i18n.ui.en.contactSuccess;
+        alert(successMsg);
+        
+        // Close modal
+        closeContactModal();
       });
       
       // Mobile touch optimizations
