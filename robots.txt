@@ -35,3 +35,27 @@ Allow: /
 
 User-agent: Twitterbot
 Allow: /
+
+# Korean search engines
+User-agent: naverbot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+# Chinese search engines
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Sogou
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+# Japanese search engines
+User-agent: Yahoo
+Allow: /
+
+User-agent: MSNBot
+Allow: /
