@@ -46,7 +46,13 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-WQTGQPQ2S5');
+    gtag('config', 'G-WQTGQPQ2S5', {
+      custom_map: {
+        'custom_parameter_1': 'language_detected',
+        'custom_parameter_2': 'character_count',
+        'custom_parameter_3': 'text_length'
+      }
+    });
   </script>
   
   <!-- AdSense Auto Ads -->
@@ -227,7 +233,7 @@
       height: 2px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
     }
-    .row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+    .row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
     textarea { 
       width: 100%; 
       min-height: 240px; 
@@ -259,8 +265,32 @@
       background: linear-gradient(135deg, #64748b, #475569);
       box-shadow: 0 6px 20px rgba(71,85,105,.4);
     }
+    
+    .rules-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(16,185,129,.3);
+      display: block !important;
+      visibility: visible !important;
+    }
+    
+    .rules-btn:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      box-shadow: 0 6px 20px rgba(16,185,129,.4);
+    }
 
-    .stats { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .stats { 
+      margin-top: 16px; 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+      gap: 12px; 
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      min-height: 100px;
+      opacity: 1;
+      visibility: visible;
+    }
     .card { 
       padding: 18px; 
       border: 1px solid var(--border); 
@@ -271,6 +301,10 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      min-height: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .card:hover {
       transform: translateY(-2px);
@@ -322,6 +356,17 @@
         min-height: 200px; 
         font-size: 16px; /* Prevents zoom on iOS */
         padding: 16px;
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        background: var(--card);
+        color: var(--text);
+        transition: all 0.3s ease;
+      }
+      
+      textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(37,99,235,.1);
       }
       
       .under-actions { flex-direction: column; gap: 12px; }
@@ -477,6 +522,7 @@
         <h2 class="sr-only" id="analysisToolTitle">Text Analysis Tool</h2>
         <div class="row">
           <button id="pasteBtnTop" class="primary" type="button">Paste text</button>
+          <button id="rulesBtn" class="rules-btn" type="button" style="display: block !important; visibility: visible !important; background: #10b981; color: white; border: none; padding: 12px 16px; border-radius: 12px; font-weight: 600; cursor: pointer;">📊 Counting Rules</button>
         </div>
 
         <label for="textInput" class="sr-only" id="textInputLabel">Enter text to analyze</label>
@@ -498,7 +544,12 @@
           </script>
         </div>
 
-        <div id="result" style="margin-top: 12px;" role="region" aria-label="Character count analysis results"></div>
+        <div id="result" style="margin-top: 12px; min-height: 120px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; align-items: center; justify-content: center;" role="region" aria-label="Character count analysis results">
+          <div style="color: var(--muted); font-style: italic; text-align: center;">
+            텍스트를 입력하면 글자수 분석 결과가 여기에 표시됩니다.<br>
+            Enter text to see character count analysis results here.
+          </div>
+        </div>
 
         <div id="adFooter" class="ad-slot">
           <!-- Footer Banner - TypeStats -->
@@ -537,6 +588,87 @@
         <script>
              (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rules Modal -->
+  <div id="rulesModal" style="position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.5); z-index: 9999;">
+    <div class="rules-wrap" style="width: min(800px, 90vw); max-height: 80vh; background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden;">
+      <div class="rules-head" style="padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin: 0; font-weight: 700; color: var(--text);">📊 Character Counting Rules</h3>
+        <button id="rulesClose" type="button" style="padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: transparent; cursor: pointer; color: var(--text);">✕</button>
+      </div>
+      <div class="rules-body" style="padding: 24px; overflow-y: auto; max-height: 60vh;">
+        <div class="rules-content">
+          <h4 style="color: var(--accent); margin-bottom: 16px;">🌍 Language-Specific Counting Rules</h4>
+          
+          <div class="rule-section" style="margin-bottom: 24px;">
+            <h5 style="color: var(--text); margin-bottom: 12px;">🇺🇸 English Words</h5>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text);">
+              <li><strong>Hyphenated words:</strong> <code>player-driven</code>, <code>top-tier</code> → <strong>1 word</strong> (not 2)</li>
+              <li><strong>Contractions:</strong> <code>don't</code>, <code>isn't</code> → <strong>1 word</strong></li>
+              <li><strong>Numbers + letters:</strong> <code>MU666</code>, <code>24/7</code> → <strong>1 word</strong></li>
+              <li><strong>Word boundaries:</strong> Properly detects word boundaries using Unicode-aware regex</li>
+            </ul>
+            <div style="background: var(--bg2); padding: 12px; border-radius: 8px; margin-top: 8px; font-size: 0.9em; color: var(--muted);">
+              <strong>Note:</strong> This differs from Microsoft Word/Pages which may count hyphenated words as separate words.
+            </div>
+          </div>
+
+          <div class="rule-section" style="margin-bottom: 24px;">
+            <h5 style="color: var(--text); margin-bottom: 12px;">🇰🇷 Korean Characters</h5>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text);">
+              <li><strong>Hangul syllables:</strong> <code>안녕하세요</code> → <strong>5 characters</strong></li>
+              <li><strong>Mixed content:</strong> Korean + English uses special counting rules</li>
+              <li><strong>Spaces excluded:</strong> Only actual characters are counted</li>
+            </ul>
+          </div>
+
+          <div class="rule-section" style="margin-bottom: 24px;">
+            <h5 style="color: var(--text); margin-bottom: 12px;">🇨🇳 Chinese Characters</h5>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text);">
+              <li><strong>Han characters:</strong> <code>你好世界</code> → <strong>4 characters</strong></li>
+              <li><strong>Simplified & Traditional:</strong> Both variants supported</li>
+              <li><strong>Punctuation:</strong> Chinese punctuation marks counted separately</li>
+            </ul>
+          </div>
+
+          <div class="rule-section" style="margin-bottom: 24px;">
+            <h5 style="color: var(--text); margin-bottom: 12px;">🇯🇵 Japanese Characters</h5>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text);">
+              <li><strong>Hiragana + Katakana:</strong> Combined as "Japanese" category</li>
+              <li><strong>Kanji:</strong> Counted as Chinese characters</li>
+              <li><strong>Mixed scripts:</strong> Properly separated and counted</li>
+            </ul>
+          </div>
+
+          <div class="rule-section" style="margin-bottom: 24px;">
+            <h5 style="color: var(--text); margin-bottom: 12px;">🔢 Numbers & Punctuation</h5>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text);">
+              <li><strong>Digits:</strong> <code>0-9</code> counted separately</li>
+              <li><strong>Punctuation:</strong> All Unicode punctuation marks</li>
+              <li><strong>Special characters:</strong> Symbols, emojis, etc.</li>
+            </ul>
+          </div>
+
+          <div class="rule-section" style="margin-bottom: 24px;">
+            <h5 style="color: var(--text); margin-bottom: 12px;">⚖️ Total Count Logic</h5>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text);">
+              <li><strong>Korean-dominant text:</strong> All characters (spaces excluded)</li>
+              <li><strong>Other languages:</strong> Script characters + English words + digits</li>
+              <li><strong>Punctuation:</strong> Excluded from total count</li>
+            </ul>
+          </div>
+
+          <div style="background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; padding: 16px; border-radius: 12px; margin-top: 24px;">
+            <h5 style="margin: 0 0 8px; color: white;">💡 Why This Matters</h5>
+            <p style="margin: 0; font-size: 0.9em; opacity: 0.9;">
+              Accurate character counting is crucial for voice-over timing, translation pricing, and content optimization. 
+              Our AI-powered rules ensure consistency across all supported languages.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -601,7 +733,7 @@
     // i18n (UI + labels + script names)
     const i18n = {
       ui: {
-        en:{title:'Multilingual Character Counter',subtitle:'Analyze scripts with language-specific intelligence—accurate counts for Korean, Chinese, English, and more.',paste:'Paste text',clear:'Clear',placeholder:'Type or paste your text…',hi1:'AI Precision',hi1s:'Language-aware counts for characters, words, digits, and punctuation—tailored for each script.',hi2:'Smart Rules',hi2s:'Applies Korean-focused or multilingual rules dynamically. Perfect for bilingual scripts.',brand:'AI-powered Multilingual Character Counter',analysisTool:'Multilingual Text Analyzer',textInputLabel:'Automatically detects languages and counts characters by language with AI precision.',contact:'Contact',contactTitle:'Contact Developer',contactEmail:'Email *',contactPhone:'Phone (Optional)',contactMessage:'Message *',contactCancel:'Cancel',contactSend:'Send Message',contactSuccess:'Your email client will open with the message. Please send the email to complete your inquiry.'},
+        en:{title:'Multilingual Character Counter',subtitle:'Analyze scripts with language-specific intelligence—accurate counts for Korean, Chinese, English, and more.',paste:'Paste text',clear:'Clear',rules:'📊 Counting Rules',placeholder:'Type or paste your text…',hi1:'AI Precision',hi1s:'Language-aware counts for characters, words, digits, and punctuation—tailored for each script.',hi2:'Smart Rules',hi2s:'Applies Korean-focused or multilingual rules dynamically. Perfect for bilingual scripts.',brand:'AI-powered Multilingual Character Counter',analysisTool:'Multilingual Text Analyzer',textInputLabel:'Automatically detects languages and counts characters by language with AI precision.',contact:'Contact',contactTitle:'Contact Developer',contactEmail:'Email *',contactPhone:'Phone (Optional)',contactMessage:'Message *',contactCancel:'Cancel',contactSend:'Send Message',contactSuccess:'Your email client will open with the message. Please send the email to complete your inquiry.'},
         ko:{title:'다국어 글자수세기',subtitle:'AI가 계산하는 정확한 글자수, 콘텐츠 품질의 시작입니다.',paste:'텍스트 붙여넣기',clear:'지우기',placeholder:'텍스트를 입력하거나 붙여넣으세요…',hi1:'AI 정밀도',hi1s:'언어별 글자·단어·숫자·문장부호 집계.',hi2:'스마트 규칙',hi2s:'한국어 최다 시 특수 규칙, 그 외 통일 규칙.',brand:'언어별 규칙에 맞춘 AI 기반 글자수 분석기',analysisTool:'다국어 텍스트 분석기',textInputLabel:'AI가 텍스트 속 언어를 자동으로 감지하고, 언어별로 정확하게 글자 수를 분석합니다.',contact:'연락하기',contactTitle:'개발자에게 연락하기',contactEmail:'이메일 *',contactPhone:'연락처 (선택사항)',contactMessage:'문의 내용 *',contactCancel:'취소',contactSend:'메시지 보내기',contactSuccess:'이메일 클라이언트가 열립니다. 이메일을 보내주시면 문의가 완료됩니다.'},
         'zh-CN':{title:'多语言字符统计专家',subtitle:'基于语言识别的AI引擎，精准统计韩语、中文、英语等多语脚本中的字数或单词。',paste:'粘贴文本',clear:'清空',placeholder:'输入或粘贴文本…',hi1:'AI精准解析',hi1s:'按语言类型智能识别字数、词语、数字与符号，确保每一项统计结果准确可靠。',hi2:'智能统计规则',hi2s:'灵活切换韩语优先或统一标准，专为双语及多语言剧本优化设计。',brand:'AI智能驱动的多语言字数统计工具',analysisTool:'多语言文本分析器',textInputLabel:'通过 AI 自动识别语言，并按语言类型精准统计字数。'},
         'zh-TW':{title:'多語文字元統計專家',subtitle:'基於語言識別的AI引擎，精準統計韓語、中文、英語等多語腳本中的字數或單詞。',paste:'貼上文字',clear:'清除',placeholder:'輸入或貼上文字…',hi1:'AI精準解析',hi1s:'按語言類型智能識別字數、詞語、數字與符號，確保每一項統計結果準確可靠。',hi2:'智能統計規則',hi2s:'靈活切換韓語優先或統一標準，專為雙語及多語言劇本優化設計。',brand:'AI智能驅動的多語言字數統計工具',analysisTool:'多語言文本分析器',textInputLabel:'透過 AI 自動偵測語言，並依語言類型精準統計字數。'},
@@ -649,6 +781,66 @@
 
     const langOrder = ['en','ko','zh-CN','zh-TW','ja','th','vi','ru','ar','fr','de','es','pt'];
 
+    // Analytics tracking functions
+    function trackCharacterCount(text, stats, uiLang) {
+      if (!text || text.trim().length === 0) return;
+      
+      const textLength = text.length;
+      const primaryLanguage = stats.primary.key || 'Unknown';
+      const totalCount = stats.total;
+      
+      // Track character counting event with detailed language info
+      gtag('event', 'character_count', {
+        'event_category': 'text_analysis',
+        'event_label': primaryLanguage,
+        'value': totalCount,
+        'language_detected': primaryLanguage,
+        'character_count': totalCount,
+        'text_length': textLength,
+        'ui_language': uiLang
+      });
+      
+      // Track specific language detection
+      gtag('event', 'language_detected', {
+        'event_category': 'language_analysis',
+        'event_label': primaryLanguage,
+        'value': stats.counts[primaryLanguage] || 0,
+        'detected_language': primaryLanguage,
+        'language_count': stats.counts[primaryLanguage] || 0
+      });
+      
+      // Track UI language selection
+      gtag('event', 'ui_language_selected', {
+        'event_category': 'user_preference',
+        'event_label': uiLang,
+        'value': 1,
+        'selected_ui_language': uiLang
+      });
+      
+      // Track all detected languages in the text
+      Object.entries(stats.counts).forEach(([lang, count]) => {
+        if (count > 0) {
+          gtag('event', 'language_usage', {
+            'event_category': 'language_breakdown',
+            'event_label': lang,
+            'value': count,
+            'language_type': lang,
+            'character_count': count
+          });
+        }
+      });
+      
+    }
+    
+    function trackUserAction(action, details = {}) {
+      gtag('event', action, {
+        'event_category': 'user_interaction',
+        'event_label': details.label || action,
+        'value': details.value || 1
+      });
+    }
+    
+
     function localScriptName(key, uiLang) {
       const m = i18n.scripts[uiLang] || i18n.scripts.en;
       return m[key] || key;
@@ -668,6 +860,9 @@
       document.getElementById('hi2s').textContent = u.hi2s;
       document.getElementById('pasteBtnTop').textContent = u.paste;
       document.getElementById('clearBtn').textContent = u.clear;
+      if (document.getElementById('rulesBtn')) {
+        document.getElementById('rulesBtn').textContent = u.rules || '📊 Counting Rules';
+      }
       // Update new fields
       if (document.getElementById('analysisToolTitle')) {
         document.getElementById('analysisToolTitle').textContent = u.analysisTool || 'Text Analysis Tool';
@@ -762,22 +957,33 @@
         totalSubtitle = `${comp.join(' + ')}, ${L.noPunct}`;
       }
 
-      document.getElementById('result').innerHTML = `
-        <div class="stats">
-          ${scriptCards}
-          <div class="card"><div class="label">${englishLabel}</div><div class="value">${stats.englishDisplay.toLocaleString()}</div></div>
-          <div class="card"><div class="label">${L.digits}</div><div class="value">${stats.digits.toLocaleString()}</div></div>
-          <div class="card"><div class="label">${L.punct}</div><div class="value">${stats.punct.toLocaleString()}</div></div>
-          <div class="card">
-            <div class="label">${totalLabel}</div>
-            <div class="value">${stats.total.toLocaleString()}</div>
-            ${totalSubtitle ? `<div class="subtitle" style="font-size:0.8em;color:var(--muted);margin-top:4px;">${totalSubtitle}</div>` : ''}
+      const resultElement = document.getElementById('result');
+      if (stats.total === 0) {
+        resultElement.innerHTML = `
+          <div style="color: var(--muted); font-style: italic; text-align: center;">
+            텍스트를 입력하면 글자수 분석 결과가 여기에 표시됩니다.<br>
+            Enter text to see character count analysis results here.
           </div>
-        </div>
-      `;
+        `;
+      } else {
+        resultElement.innerHTML = `
+          <div class="stats">
+            ${scriptCards}
+            <div class="card"><div class="label">${englishLabel}</div><div class="value">${stats.englishDisplay.toLocaleString()}</div></div>
+            <div class="card"><div class="label">${L.digits}</div><div class="value">${stats.digits.toLocaleString()}</div></div>
+            <div class="card"><div class="label">${L.punct}</div><div class="value">${stats.punct.toLocaleString()}</div></div>
+            <div class="card">
+              <div class="label">${totalLabel}</div>
+              <div class="value">${stats.total.toLocaleString()}</div>
+              ${totalSubtitle ? `<div class="subtitle" style="font-size:0.8em;color:var(--muted);margin-top:4px;">${totalSubtitle}</div>` : ''}
+            </div>
+          </div>
+        `;
+      }
     }
 
     async function pasteText() {
+      trackUserAction('paste_button_clicked', { label: 'paste_button' });
       const el = document.getElementById('textInput');
       try {
         let clip = await navigator.clipboard.readText();
@@ -787,11 +993,13 @@
         el.value = el.value.slice(0, start) + clip + el.value.slice(end);
         const pos = start + clip.length;
         el.setSelectionRange?.(pos, pos);
+        trackUserAction('paste_successful', { label: 'clipboard_paste', value: clip.length });
       } catch {
         const fallback = prompt('Paste is not allowed by the browser.\nPlease paste your content here:');
         if (fallback !== null) {
           const cleaned = normalizePasted(fallback);
           el.value += (el.value ? '\n' : '') + cleaned;
+          trackUserAction('paste_fallback_used', { label: 'manual_paste', value: cleaned.length });
         }
       }
       el.scrollTop = 0;
@@ -800,9 +1008,15 @@
     }
 
     function clearText() {
+      trackUserAction('clear_button_clicked', { label: 'clear_button' });
       const el = document.getElementById('textInput');
       el.value = '';
-      document.getElementById('result').innerHTML = '';
+      document.getElementById('result').innerHTML = `
+        <div style="color: var(--muted); font-style: italic; text-align: center;">
+          텍스트를 입력하면 글자수 분석 결과가 여기에 표시됩니다.<br>
+          Enter text to see character count analysis results here.
+        </div>
+      `;
       el.focus();
     }
 
@@ -812,8 +1026,36 @@
       inputTimer = setTimeout(() => {
         const uiLang = document.getElementById('lang').value;
         const text = document.getElementById('textInput').value;
-        render(analyze(text, uiLang));
-      }, 60);
+        const stats = analyze(text, uiLang);
+        render(stats);
+        
+        // Track analytics if there's meaningful text
+        if (text && text.trim().length > 0) {
+          trackCharacterCount(text, stats, uiLang);
+        }
+      }, 100); // Slightly increased delay for better performance
+    }
+    
+    // Add immediate feedback for typing
+    function onInputImmediate() {
+      const text = document.getElementById('textInput').value;
+      const resultElement = document.getElementById('result');
+      
+      if (text.trim().length === 0) {
+        resultElement.innerHTML = `
+          <div style="color: var(--muted); font-style: italic; text-align: center;">
+            텍스트를 입력하면 글자수 분석 결과가 여기에 표시됩니다.<br>
+            Enter text to see character count analysis results here.
+          </div>
+        `;
+      } else {
+        // Show loading state
+        resultElement.innerHTML = `
+          <div style="color: var(--accent); text-align: center; font-weight: 500;">
+            분석 중... / Analyzing...
+          </div>
+        `;
+      }
     }
 
     // Always show modal after paste (every time)
@@ -879,20 +1121,55 @@
       document.getElementById('adMessage').textContent =
         defaultLang === 'ko' ? msg.ko : msg.en;
       
+      // Initialize result area with placeholder message
+      const resultElement = document.getElementById('result');
+      if (resultElement && !resultElement.innerHTML.trim()) {
+        resultElement.innerHTML = `
+          <div style="color: var(--muted); font-style: italic; text-align: center;">
+            텍스트를 입력하면 글자수 분석 결과가 여기에 표시됩니다.<br>
+            Enter text to see character count analysis results here.
+          </div>
+        `;
+      }
+      
       sel.addEventListener('change', () => {
-        setUILanguage(sel.value);
+        const selectedLang = sel.value;
+        const langNames = {
+          'en': 'English', 'ko': '한국어', 'zh-CN': '中文(简体)',
+          'zh-TW': '中文(繁體)', 'ja': '日本語', 'th': 'ภาษาไทย',
+          'vi': 'Tiếng Việt', 'ru': 'Русский', 'ar': 'العربية',
+          'fr': 'Français', 'de': 'Deutsch', 'es': 'Español', 'pt': 'Português'
+        };
+        
+        // Track UI language change with detailed info
+        gtag('event', 'ui_language_changed', {
+          'event_category': 'user_preference',
+          'event_label': selectedLang,
+          'value': 1,
+          'language_code': selectedLang,
+          'language_name': langNames[selectedLang] || selectedLang
+        });
+        
+        setUILanguage(selectedLang);
         document.getElementById('adMessage').textContent =
-          sel.value === 'ko' ? msg.ko : msg.en;
+          selectedLang === 'ko' ? msg.ko : msg.en;
       });
 
       // Top paste button
       document.getElementById('pasteBtnTop').addEventListener('click', pasteText);
       // Clear
       document.getElementById('clearBtn').addEventListener('click', clearText);
+      // Rules button
+      document.getElementById('rulesBtn').addEventListener('click', () => {
+        document.getElementById('rulesModal').style.display = 'flex';
+      });
 
       // Textarea typing
       const ta = document.getElementById('textInput');
-      ta.addEventListener('input', onInput);
+      ta.addEventListener('input', () => {
+        onInputImmediate(); // Show immediate feedback
+        onInput(); // Then do the actual analysis
+      });
       // Keyboard paste handling (Cmd/Ctrl+V)
       ta.addEventListener('paste', (e) => {
         e.preventDefault();
@@ -910,10 +1187,12 @@
 
       // Language is already set by detectBrowserLanguage() above
       
-      // Logo home link
+      // Logo click handler (scroll to top)
       document.getElementById('logoHome').addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
+      
+      // Footer click handled by onclick attribute
 
       // Contact modal functionality
       const contactModal = document.getElementById('contactModal');
@@ -940,6 +1219,30 @@
       contactModal.addEventListener('click', (e) => {
         if (e.target === contactModal) {
           closeContactModal();
+        }
+      });
+
+      // Rules modal functionality
+      const rulesModal = document.getElementById('rulesModal');
+      const rulesClose = document.getElementById('rulesClose');
+
+      // Close rules modal
+      function closeRulesModal() {
+        rulesModal.style.display = 'none';
+        // Ensure the rules button is still visible after closing modal
+        const rulesBtn = document.getElementById('rulesBtn');
+        if (rulesBtn) {
+          rulesBtn.style.display = 'block';
+          rulesBtn.style.visibility = 'visible';
+        }
+      }
+
+      rulesClose.addEventListener('click', closeRulesModal);
+
+      // Close modal when clicking outside
+      rulesModal.addEventListener('click', (e) => {
+        if (e.target === rulesModal) {
+          closeRulesModal();
         }
       });
 
@@ -998,6 +1301,7 @@
           btn.style.transform = 'scale(1)';
         });
       });
+      
     });
 
     // Light "view source" deterrents (bypassable)
@@ -1014,6 +1318,8 @@
       }
     });
 
+
+    
     // Optional: limit features to your domain (keep modal)
     (function lockToDomain() {
       const allowed = ['typestats', 'localhost', '127.0.0.1', 'vercel.app'];

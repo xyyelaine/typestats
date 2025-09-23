@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeStats 테스트</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .test-result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>TypeStats 글자수세기 테스트</h1>
+    
+    <div class="test-section">
+        <h2>기본 기능 테스트</h2>
+        <p>아래 텍스트를 입력하여 글자수세기 기능을 테스트해보세요:</p>
+        <textarea class="test-input" id="testInput" placeholder="테스트할 텍스트를 입력하세요...">안녕하세요! Hello World! 123</textarea>
+        <div class="test-result" id="testResult">결과가 여기에 표시됩니다.</div>
+    </div>
+
+    <div class="test-section">
+        <h2>테스트 상태</h2>
+        <div id="testStatus" class="status">테스트 준비 중...</div>
+    </div>
+
+    <script>
+        // 간단한 글자수세기 함수
+        function countCharacters(text) {
+            const noSpaces = text.replace(/\s+/g, '');
+            const korean = (noSpaces.match(/[\uAC00-\uD7AF]/g) || []).length;
+            const english = (noSpaces.match(/[A-Za-z]/g) || []).length;
+            const digits = (noSpaces.match(/[0-9]/g) || []).length;
+            const punctuation = (noSpaces.match(/[^\w\s]/g) || []).length;
+            const total = noSpaces.length;
+
+            return {
+                korean,
+                english,
+                digits,
+                punctuation,
+                total,
+                withSpaces: text.length
+            };
+        }
+
+        function updateResult() {
+            const text = document.getElementById('testInput').value;
+            const result = countCharacters(text);
+            
+            document.getElementById('testResult').innerHTML = `
+                <strong>분석 결과:</strong><br>
+                한국어: ${result.korean}자<br>
+                영어: ${result.english}자<br>
+                숫자: ${result.digits}자<br>
+                문장부호: ${result.punctuation}자<br>
+                <strong>총 글자수 (공백 제외): ${result.total}자</strong><br>
+                총 글자수 (공백 포함): ${result.withSpaces}자
+            `;
+
+            // 테스트 상태 업데이트
+            const status = document.getElementById('testStatus');
+            if (text.trim().length > 0) {
+                status.className = 'status success';
+                status.textContent = '✅ 글자수세기 기능이 정상적으로 작동합니다!';
+            } else {
+                status.className = 'status';
+                status.textContent = '텍스트를 입력하면 결과를 확인할 수 있습니다.';
+            }
+        }
+
+        // 이벤트 리스너
+        document.getElementById('testInput').addEventListener('input', updateResult);
+        
+        // 초기 실행
+        updateResult();
+    </script>
+</body>
+</html>
