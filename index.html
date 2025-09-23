@@ -281,10 +281,11 @@
       box-shadow: 0 6px 20px rgba(16,185,129,.4);
     }
 
+    #result .stats,
     .stats { 
       margin-top: 16px; 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+      display: grid !important; 
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important; 
       gap: 12px; 
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       min-height: 100px;
@@ -420,8 +421,9 @@
         padding: 8px 12px !important;
       }
       
+      #result .stats,
       .stats { 
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important; 
         gap: 16px; 
         margin-top: 20px; 
       }
@@ -478,8 +480,9 @@
         font-size: 16px;
       }
       
+      #result .stats,
       .stats { 
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important; 
         gap: 12px; 
       }
       .card { padding: 14px; }
@@ -536,14 +539,39 @@
         padding: 5px 8px !important;
       }
       
+      #result .stats,
       .stats { 
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important; 
         gap: 8px; 
       }
     }
     
     .about-link:hover {
       color: #1d4ed8 !important;
+    }
+    
+    /* Force grid layout for statistics */
+    #result .stats {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+    }
+    
+    @media (max-width: 768px) {
+      #result .stats {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      #result .stats {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+      }
+    }
+    
+    @media (max-width: 360px) {
+      #result .stats {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+      }
     }
   </style>
   
