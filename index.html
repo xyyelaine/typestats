@@ -284,7 +284,7 @@
     .stats { 
       margin-top: 16px; 
       display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
       gap: 12px; 
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       min-height: 100px;
@@ -331,12 +331,43 @@
 
     /* Mobile Responsive Styles */
     @media (max-width: 768px) {
-      .nav { padding: 12px 16px; display: flex; flex-direction: row; justify-content: flex-start; align-items: center; gap: 16px; }
-      .brand { justify-content: flex-start; flex-direction: row; align-items: center; gap: 0px; }
-      .brand-logo { height: 28px; margin-right: 0px; }
-      .brand-text { font-size: 0.75em; text-align: left; white-space: nowrap; flex: 1; overflow: hidden; text-overflow: ellipsis; display: block; margin-left: 0px; }
+      .nav { 
+        padding: 12px 16px; 
+        display: flex; 
+        flex-direction: row; 
+        justify-content: space-between; 
+        align-items: center; 
+        gap: 8px; 
+        flex-wrap: nowrap;
+        overflow: hidden;
+      }
+      .brand { 
+        justify-content: flex-start; 
+        flex-direction: row; 
+        align-items: center; 
+        gap: 0px; 
+        flex-shrink: 0;
+        min-width: 0;
+      }
+      .brand-logo { height: 28px; margin-right: 0px; flex-shrink: 0; }
+      .brand-text { 
+        font-size: 0.7em; 
+        text-align: left; 
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        display: none; 
+        margin-left: 0px; 
+      }
       .nav-center { display: none; }
-      .controls { justify-content: flex-start; margin-left: auto; }
+      .controls { 
+        justify-content: flex-end; 
+        margin-left: auto; 
+        flex-shrink: 0;
+        gap: 6px;
+        display: flex;
+        align-items: center;
+      }
       
       .container { padding: 16px; }
       .hero { gap: 16px; }
@@ -372,6 +403,23 @@
       .under-actions { flex-direction: column; gap: 12px; }
       .clear-btn { padding: 12px 20px; }
       
+      /* Mobile button optimizations */
+      .controls button, .controls select {
+        padding: 8px 12px;
+        font-size: 0.85em;
+        min-width: auto;
+      }
+      
+      .about-link {
+        font-size: 0.85em;
+        margin-right: 8px !important;
+      }
+      
+      .rules-btn {
+        font-size: 0.8em;
+        padding: 8px 12px !important;
+      }
+      
       .stats { 
         grid-template-columns: 1fr; 
         gap: 16px; 
@@ -387,11 +435,37 @@
     }
     
     @media (max-width: 480px) {
-      .nav { padding: 10px 12px; flex-direction: row; justify-content: flex-start; align-items: center; gap: 12px; }
-      .brand { justify-content: flex-start; flex-direction: row; align-items: center; gap: 0px; }
-      .brand-text { font-size: 0.7em; text-align: left; white-space: nowrap; flex: 1; overflow: hidden; text-overflow: ellipsis; display: block; margin-left: 0px; }
+      .nav { 
+        padding: 10px 12px; 
+        flex-direction: row; 
+        justify-content: space-between; 
+        align-items: center; 
+        gap: 6px; 
+        flex-wrap: nowrap;
+      }
+      .brand { 
+        justify-content: flex-start; 
+        flex-direction: row; 
+        align-items: center; 
+        gap: 0px; 
+        flex-shrink: 0;
+      }
+      .brand-text { 
+        font-size: 0.65em; 
+        text-align: left; 
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        display: none; 
+        margin-left: 0px; 
+      }
       .nav-center { display: none; }
-      .controls { justify-content: flex-start; margin-left: auto; }
+      .controls { 
+        justify-content: flex-end; 
+        margin-left: auto; 
+        flex-shrink: 0;
+        gap: 4px;
+      }
       .container { padding: 12px; }
       .hero-card { padding: 16px; }
       .panel { padding: 16px; }
@@ -411,11 +485,53 @@
       
       .ad-wrap { width: 98vw; margin: 0 1vw; }
       .ad-body { height: 250px; padding: 12px; }
+      
+      /* Extra small screen button optimizations */
+      .controls button, .controls select {
+        padding: 6px 10px;
+        font-size: 0.8em;
+        min-width: auto;
+      }
+      
+      .about-link {
+        font-size: 0.8em;
+        margin-right: 6px !important;
+      }
+      
+      .rules-btn {
+        font-size: 0.75em;
+        padding: 6px 10px !important;
+      }
     }
     
     @media (max-width: 360px) {
-      .nav { gap: 8px; }
-      .brand-text { font-size: 0.65em; max-width: 100px; }
+      .nav { 
+        gap: 4px; 
+        padding: 8px 10px;
+      }
+      .brand-text { 
+        font-size: 0.6em; 
+        max-width: 80px; 
+        display: none;
+      }
+      .brand-logo { 
+        height: 24px; 
+      }
+      .controls { 
+        gap: 3px;
+      }
+      .controls button, .controls select {
+        padding: 5px 8px;
+        font-size: 0.75em;
+      }
+      .about-link {
+        font-size: 0.75em;
+        margin-right: 4px !important;
+      }
+      .rules-btn {
+        font-size: 0.7em;
+        padding: 5px 8px !important;
+      }
     }
     
     .about-link:hover {
@@ -546,7 +662,6 @@
 
         <div id="result" style="margin-top: 12px; min-height: 120px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; align-items: center; justify-content: center;" role="region" aria-label="Character count analysis results">
           <div style="color: var(--muted); font-style: italic; text-align: center;">
-            텍스트를 입력하면 글자수 분석 결과가 여기에 표시됩니다.<br>
             Enter text to see character count analysis results here.
           </div>
         </div>
@@ -733,19 +848,19 @@
     // i18n (UI + labels + script names)
     const i18n = {
       ui: {
-        en:{title:'Multilingual Character Counter',subtitle:'Analyze scripts with language-specific intelligence—accurate counts for Korean, Chinese, English, and more.',paste:'Paste text',clear:'Clear',rules:'📊 Counting Rules',placeholder:'Type or paste your text…',hi1:'AI Precision',hi1s:'Language-aware counts for characters, words, digits, and punctuation—tailored for each script.',hi2:'Smart Rules',hi2s:'Applies Korean-focused or multilingual rules dynamically. Perfect for bilingual scripts.',brand:'AI-powered Multilingual Character Counter',analysisTool:'Multilingual Text Analyzer',textInputLabel:'Automatically detects languages and counts characters by language with AI precision.',contact:'Contact',contactTitle:'Contact Developer',contactEmail:'Email *',contactPhone:'Phone (Optional)',contactMessage:'Message *',contactCancel:'Cancel',contactSend:'Send Message',contactSuccess:'Your email client will open with the message. Please send the email to complete your inquiry.'},
-        ko:{title:'다국어 글자수세기',subtitle:'AI가 계산하는 정확한 글자수, 콘텐츠 품질의 시작입니다.',paste:'텍스트 붙여넣기',clear:'지우기',placeholder:'텍스트를 입력하거나 붙여넣으세요…',hi1:'AI 정밀도',hi1s:'언어별 글자·단어·숫자·문장부호 집계.',hi2:'스마트 규칙',hi2s:'한국어 최다 시 특수 규칙, 그 외 통일 규칙.',brand:'언어별 규칙에 맞춘 AI 기반 글자수 분석기',analysisTool:'다국어 텍스트 분석기',textInputLabel:'AI가 텍스트 속 언어를 자동으로 감지하고, 언어별로 정확하게 글자 수를 분석합니다.',contact:'연락하기',contactTitle:'개발자에게 연락하기',contactEmail:'이메일 *',contactPhone:'연락처 (선택사항)',contactMessage:'문의 내용 *',contactCancel:'취소',contactSend:'메시지 보내기',contactSuccess:'이메일 클라이언트가 열립니다. 이메일을 보내주시면 문의가 완료됩니다.'},
-        'zh-CN':{title:'多语言字符统计专家',subtitle:'基于语言识别的AI引擎，精准统计韩语、中文、英语等多语脚本中的字数或单词。',paste:'粘贴文本',clear:'清空',placeholder:'输入或粘贴文本…',hi1:'AI精准解析',hi1s:'按语言类型智能识别字数、词语、数字与符号，确保每一项统计结果准确可靠。',hi2:'智能统计规则',hi2s:'灵活切换韩语优先或统一标准，专为双语及多语言剧本优化设计。',brand:'AI智能驱动的多语言字数统计工具',analysisTool:'多语言文本分析器',textInputLabel:'通过 AI 自动识别语言，并按语言类型精准统计字数。'},
-        'zh-TW':{title:'多語文字元統計專家',subtitle:'基於語言識別的AI引擎，精準統計韓語、中文、英語等多語腳本中的字數或單詞。',paste:'貼上文字',clear:'清除',placeholder:'輸入或貼上文字…',hi1:'AI精準解析',hi1s:'按語言類型智能識別字數、詞語、數字與符號，確保每一項統計結果準確可靠。',hi2:'智能統計規則',hi2s:'靈活切換韓語優先或統一標準，專為雙語及多語言劇本優化設計。',brand:'AI智能驅動的多語言字數統計工具',analysisTool:'多語言文本分析器',textInputLabel:'透過 AI 自動偵測語言，並依語言類型精準統計字數。'},
-        ja:{title:'多言語文字数カウンター',subtitle:'言語固有の知能でスクリプトを分析——韓国語、中国語、英語など正確なカウント。',paste:'テキストを貼り付け',clear:'クリア',placeholder:'テキストを入力/貼り付け…',hi1:'AI精密',hi1s:'各スクリプトに合わせた文字、単語、数字、句読点の言語認識カウント。',hi2:'スマート規則',hi2s:'韓国語重点または多言語規則を動的に適用。バイリンガルスクリプトに最適。',brand:'AI駆動多言語文字数カウンター',analysisTool:'多言語テキストアナライザー',textInputLabel:'AI が言語を自動検出し、言語ごとに正確な文字数をカウントします。'},
-        th:{title:'ตัวนับอักขระหลายภาษา',subtitle:'วิเคราะห์สคริปต์ด้วยความฉลาดเฉพาะภาษา—นับที่แม่นยำสำหรับเกาหลี จีน อังกฤษ และอื่นๆ',paste:'วางข้อความ',clear:'ล้าง',placeholder:'พิมพ์หรือวางข้อความ…',hi1:'AI ความแม่นยำ',hi1s:'นับอักขระ คำ ตัวเลข เครื่องหมายวรรคตอนที่รู้จักภาษา—ปรับให้เหมาะกับแต่ละสคริปต์',hi2:'กฎอัจฉริยะ',hi2s:'ใช้กฎเน้นเกาหลีหรือหลายภาษาอย่างไดนามิก เหมาะสำหรับสคริปต์สองภาษา',brand:'ตัวนับอักขระหลายภาษาที่ขับเคลื่อนด้วย AI',analysisTool:'เครื่องวิเคราะห์ข้อความหลายภาษา',textInputLabel:'AI ตรวจจับภาษาอัตโนมัติและนับอักขระตามภาษาด้วยความแม่นยำ'},
-        vi:{title:'Bộ đếm ký tự đa ngôn ngữ',subtitle:'Phân tích kịch bản với trí tuệ đặc thù ngôn ngữ—đếm chính xác cho Hàn, Trung, Anh và hơn thế.',paste:'Dán văn bản',clear:'Xóa',placeholder:'Nhập hoặc dán văn bản…',hi1:'AI Chính xác',hi1s:'Đếm ký tự, từ, số, dấu câu nhận biết ngôn ngữ—tùy chỉnh cho từng kịch bản.',hi2:'Quy tắc thông minh',hi2s:'Áp dụng động quy tắc tập trung Hàn Quốc hoặc đa ngôn ngữ. Hoàn hảo cho kịch bản song ngữ.',brand:'Bộ đếm ký tự đa ngôn ngữ được AI hỗ trợ',analysisTool:'Trình phân tích văn bản đa ngôn ngữ',textInputLabel:'AI tự động phát hiện ngôn ngữ và đếm ký tự theo ngôn ngữ với độ chính xác cao.'},
-        ru:{title:'Многоязычный счётчик символов',subtitle:'Анализ скриптов с языковой специфической интеллектуальностью—точный подсчёт для корейского, китайского, английского и других.',paste:'Вставить текст',clear:'Очистить',placeholder:'Введите или вставьте текст…',hi1:'AI Точность',hi1s:'Языково-осведомлённый подсчёт символов, слов, цифр и пунктуации—настроенный для каждого скрипта.',hi2:'Умные правила',hi2s:'Динамически применяет корейско-ориентированные или многоязычные правила. Идеально для двуязычных скриптов.',brand:'Многоязычный счётчик символов на базе ИИ',analysisTool:'Многоязычный анализатор текста',textInputLabel:'AI автоматически определяет языки и подсчитывает символы по языкам с высокой точностью.'},
-        ar:{title:'عداد الأحرف متعدد اللغات',subtitle:'تحليل النصوص بذكاء خاص باللغة—عد دقيق للكورية والصينية والإنجليزية والمزيد.',paste:'لصق النص',clear:'مسح',placeholder:'اكتب أو الصق النص…',hi1:'دقة الذكاء الاصطناعي',hi1s:'عد الأحرف والكلمات والأرقام وعلامات الترقيم الواعي باللغة—مخصص لكل نص.',hi2:'قواعد ذكية',hi2s:'يطبق قواعد مركزة على الكورية أو متعددة اللغات ديناميكياً. مثالي للنصوص ثنائية اللغة.',brand:'عداد الأحرف متعدد اللغات مدعوم بالذكاء الاصطناعي',analysisTool:'محلل النصوص متعدد اللغات',textInputLabel:'AI يكتشف اللغات تلقائياً ويعد الأحرف حسب اللغة بدقة عالية.'},
-        fr:{title:'Compteur de caractères multilingue',subtitle:'Analysez les scripts avec une intelligence spécifique à la langue—comptes précis pour le coréen, chinois, anglais et plus.',paste:'Coller le texte',clear:'Effacer',placeholder:'Saisissez ou collez du texte…',hi1:'Précision IA',hi1s:'Comptes conscients de la langue pour caractères, mots, chiffres et ponctuation—adaptés à chaque script.',hi2:'Règles intelligentes',hi2s:'Applique dynamiquement des règles centrées sur le coréen ou multilingues. Parfait pour les scripts bilingues.',brand:'Compteur de caractères multilingue alimenté par IA',analysisTool:'Analyseur de texte multilingue',textInputLabel:'IA détecte automatiquement les langues et compte les caractères par langue avec précision.'},
-        de:{title:'Mehrsprachiger Zeichenzähler',subtitle:'Analysieren Sie Skripte mit sprachspezifischer Intelligenz—genaue Zählungen für Koreanisch, Chinesisch, Englisch und mehr.',paste:'Text einfügen',clear:'Löschen',placeholder:'Text eingeben oder einfügen…',hi1:'KI-Präzision',hi1s:'Sprachbewusste Zählungen für Zeichen, Wörter, Ziffern und Interpunktion—angepasst an jedes Skript.',hi2:'Smarte Regeln',hi2s:'Wendet dynamisch koreanisch-fokussierte oder mehrsprachige Regeln an. Perfekt für zweisprachige Skripte.',brand:'KI-gestützter mehrsprachiger Zeichenzähler',analysisTool:'Mehrsprachiger Textanalysator',textInputLabel:'KI erkennt automatisch Sprachen und zählt Zeichen nach Sprache mit hoher Präzision.'},
-        es:{title:'Contador de caracteres multilingüe',subtitle:'Analiza scripts con inteligencia específica del idioma—conteos precisos para coreano, chino, inglés y más.',paste:'Pegar texto',clear:'Borrar',placeholder:'Escribe o pega texto…',hi1:'Precisión IA',hi1s:'Conteos conscientes del idioma para caracteres, palabras, dígitos y puntuación—adaptados a cada script.',hi2:'Reglas inteligentes',hi2s:'Aplica dinámicamente reglas centradas en coreano o multilingües. Perfecto para scripts bilingües.',brand:'Contador de caracteres multilingüe impulsado por IA',analysisTool:'Analizador de texto multilingüe',textInputLabel:'IA detecta automáticamente idiomas y cuenta caracteres por idioma con precisión.'},
-        pt:{title:'Contador de caracteres multilíngue',subtitle:'Analise scripts com inteligência específica da linguagem—contagens precisas para coreano, chinês, inglês e mais.',paste:'Colar texto',clear:'Limpar',placeholder:'Digite ou cole o texto…',hi1:'Precisão IA',hi1s:'Contagens conscientes da linguagem para caracteres, palavras, dígitos e pontuação—adaptadas a cada script.',hi2:'Regras inteligentes',hi2s:'Aplica dinamicamente regras focadas no coreano ou multilíngues. Perfeito para scripts bilíngues.',brand:'Contador de caracteres multilíngue alimentado por IA',analysisTool:'Analisador de texto multilíngue',textInputLabel:'IA detecta automaticamente idiomas e conta caracteres por idioma com precisão.'}
+        en:{title:'Multilingual Character Counter',subtitle:'Analyze scripts with language-specific intelligence—accurate counts for Korean, Chinese, English, and more.',paste:'Paste text',clear:'Clear',rules:'📊 Counting Rules',placeholder:'Type or paste your text…',hi1:'AI Precision',hi1s:'Language-aware counts for characters, words, digits, and punctuation—tailored for each script.',hi2:'Smart Rules',hi2s:'Applies Korean-focused or multilingual rules dynamically. Perfect for bilingual scripts.',brand:'AI-powered Multilingual Character Counter',analysisTool:'Multilingual Text Analyzer',textInputLabel:'Automatically detects languages and counts characters by language with AI precision.',contact:'Contact',contactTitle:'Contact Developer',contactEmail:'Email *',contactPhone:'Phone (Optional)',contactMessage:'Message *',contactCancel:'Cancel',contactSend:'Send Message',contactSuccess:'Your email client will open with the message. Please send the email to complete your inquiry.',placeholderMessage:'Enter text to see character count analysis results here.'},
+        ko:{title:'다국어 글자수세기',subtitle:'AI가 계산하는 정확한 글자수, 콘텐츠 품질의 시작입니다.',paste:'텍스트 붙여넣기',clear:'지우기',rules:'📊 통계 규칙',placeholder:'텍스트를 입력하거나 붙여넣으세요…',hi1:'AI 정밀도',hi1s:'언어별 글자·단어·숫자·문장부호 집계.',hi2:'스마트 규칙',hi2s:'한국어 최다 시 특수 규칙, 그 외 통일 규칙.',brand:'언어별 규칙에 맞춘 AI 기반 글자수 분석기',analysisTool:'다국어 텍스트 분석기',textInputLabel:'AI가 텍스트 속 언어를 자동으로 감지하고, 언어별로 정확하게 글자 수를 분석합니다.',contact:'Contact',contactTitle:'개발자에게 연락하기',contactEmail:'이메일 *',contactPhone:'연락처 (선택사항)',contactMessage:'문의 내용 *',contactCancel:'취소',contactSend:'메시지 보내기',contactSuccess:'이메일 클라이언트가 열립니다. 이메일을 보내주시면 문의가 완료됩니다.',placeholderMessage:'텍스트를 입력하면 글자수 분석 결과가 여기에 표시됩니다.'},
+        'zh-CN':{title:'多语言字符统计专家',subtitle:'基于语言识别的AI引擎，精准统计韩语、中文、英语等多语脚本中的字数或单词。',paste:'粘贴文本',clear:'清空',rules:'📊 统计规则',placeholder:'输入或粘贴文本…',hi1:'AI精准解析',hi1s:'按语言类型智能识别字数、词语、数字与符号，确保每一项统计结果准确可靠。',hi2:'智能统计规则',hi2s:'灵活切换韩语优先或统一标准，专为双语及多语言剧本优化设计。',brand:'AI智能驱动的多语言字数统计工具',analysisTool:'多语言文本分析器',textInputLabel:'通过 AI 自动识别语言，并按语言类型精准统计字数。',contact:'Contact',contactTitle:'联系开发者',contactEmail:'邮箱 *',contactPhone:'电话 (可选)',contactMessage:'消息 *',contactCancel:'取消',contactSend:'发送消息',contactSuccess:'您的邮件客户端将打开。请发送邮件以完成您的询问。',placeholderMessage:'输入文本以查看字符计数分析结果。'},
+        'zh-TW':{title:'多語文字元統計專家',subtitle:'基於語言識別的AI引擎，精準統計韓語、中文、英語等多語腳本中的字數或單詞。',paste:'貼上文字',clear:'清除',rules:'📊 統計規則',placeholder:'輸入或貼上文字…',hi1:'AI精準解析',hi1s:'按語言類型智能識別字數、詞語、數字與符號，確保每一項統計結果準確可靠。',hi2:'智能統計規則',hi2s:'靈活切換韓語優先或統一標準，專為雙語及多語言劇本優化設計。',brand:'AI智能驅動的多語言字數統計工具',analysisTool:'多語言文本分析器',textInputLabel:'透過 AI 自動偵測語言，並依語言類型精準統計字數。',contact:'Contact',contactTitle:'聯繫開發者',contactEmail:'郵箱 *',contactPhone:'電話 (可選)',contactMessage:'消息 *',contactCancel:'取消',contactSend:'發送消息',contactSuccess:'您的郵件客戶端將打開。請發送郵件以完成您的詢問。',placeholderMessage:'輸入文字以查看字符計數分析結果。'},
+        ja:{title:'多言語文字数カウンター',subtitle:'言語固有の知能でスクリプトを分析——韓国語、中国語、英語など正確なカウント。',paste:'テキストを貼り付け',clear:'クリア',rules:'📊 カウント規則',placeholder:'テキストを入力/貼り付け…',hi1:'AI精密',hi1s:'各スクリプトに合わせた文字、単語、数字、句読点の言語認識カウント。',hi2:'スマート規則',hi2s:'韓国語重点または多言語規則を動的に適用。バイリンガルスクリプトに最適。',brand:'AI駆動多言語文字数カウンター',analysisTool:'多言語テキストアナライザー',textInputLabel:'AI が言語を自動検出し、言語ごとに正確な文字数をカウントします。',contact:'Contact',contactTitle:'開発者に連絡',contactEmail:'メール *',contactPhone:'電話 (オプション)',contactMessage:'メッセージ *',contactCancel:'キャンセル',contactSend:'メッセージを送信',contactSuccess:'メールクライアントが開きます。メールを送信して問い合わせを完了してください。',placeholderMessage:'テキストを入力すると文字数分析結果がここに表示されます。'},
+        th:{title:'ตัวนับอักขระหลายภาษา',subtitle:'วิเคราะห์สคริปต์ด้วยความฉลาดเฉพาะภาษา—นับที่แม่นยำสำหรับเกาหลี จีน อังกฤษ และอื่นๆ',paste:'วางข้อความ',clear:'ล้าง',rules:'📊 กฎการนับ',placeholder:'พิมพ์หรือวางข้อความ…',hi1:'AI ความแม่นยำ',hi1s:'นับอักขระ คำ ตัวเลข เครื่องหมายวรรคตอนที่รู้จักภาษา—ปรับให้เหมาะกับแต่ละสคริปต์',hi2:'กฎอัจฉริยะ',hi2s:'ใช้กฎเน้นเกาหลีหรือหลายภาษาอย่างไดนามิก เหมาะสำหรับสคริปต์สองภาษา',brand:'ตัวนับอักขระหลายภาษาที่ขับเคลื่อนด้วย AI',analysisTool:'เครื่องวิเคราะห์ข้อความหลายภาษา',textInputLabel:'AI ตรวจจับภาษาอัตโนมัติและนับอักขระตามภาษาด้วยความแม่นยำ',contact:'Contact',contactTitle:'ติดต่อนักพัฒนา',contactEmail:'อีเมล *',contactPhone:'โทรศัพท์ (ไม่บังคับ)',contactMessage:'ข้อความ *',contactCancel:'ยกเลิก',contactSend:'ส่งข้อความ',contactSuccess:'ไคลเอนต์อีเมลของคุณจะเปิดขึ้น กรุณาส่งอีเมลเพื่อทำการสอบถามให้เสร็จสิ้น',placeholderMessage:'ป้อนข้อความเพื่อดูผลการวิเคราะห์จำนวนตัวอักษรที่นี่'},
+        vi:{title:'Bộ đếm ký tự đa ngôn ngữ',subtitle:'Phân tích kịch bản với trí tuệ đặc thù ngôn ngữ—đếm chính xác cho Hàn, Trung, Anh và hơn thế.',paste:'Dán văn bản',clear:'Xóa',rules:'📊 Quy tắc đếm',placeholder:'Nhập hoặc dán văn bản…',hi1:'AI Chính xác',hi1s:'Đếm ký tự, từ, số, dấu câu nhận biết ngôn ngữ—tùy chỉnh cho từng kịch bản.',hi2:'Quy tắc thông minh',hi2s:'Áp dụng động quy tắc tập trung Hàn Quốc hoặc đa ngôn ngữ. Hoàn hảo cho kịch bản song ngữ.',brand:'Bộ đếm ký tự đa ngôn ngữ được AI hỗ trợ',analysisTool:'Trình phân tích văn bản đa ngôn ngữ',textInputLabel:'AI tự động phát hiện ngôn ngữ và đếm ký tự theo ngôn ngữ với độ chính xác cao.',contact:'Contact',contactTitle:'Liên hệ nhà phát triển',contactEmail:'Email *',contactPhone:'Điện thoại (Tùy chọn)',contactMessage:'Tin nhắn *',contactCancel:'Hủy',contactSend:'Gửi tin nhắn',contactSuccess:'Ứng dụng email của bạn sẽ mở. Vui lòng gửi email để hoàn thành yêu cầu của bạn.',placeholderMessage:'Nhập văn bản để xem kết quả phân tích số ký tự ở đây.'},
+        ru:{title:'Многоязычный счётчик символов',subtitle:'Анализ скриптов с языковой специфической интеллектуальностью—точный подсчёт для корейского, китайского, английского и других.',paste:'Вставить текст',clear:'Очистить',rules:'📊 Правила подсчёта',placeholder:'Введите или вставьте текст…',hi1:'AI Точность',hi1s:'Языково-осведомлённый подсчёт символов, слов, цифр и пунктуации—настроенный для каждого скрипта.',hi2:'Умные правила',hi2s:'Динамически применяет корейско-ориентированные или многоязычные правила. Идеально для двуязычных скриптов.',brand:'Многоязычный счётчик символов на базе ИИ',analysisTool:'Многоязычный анализатор текста',textInputLabel:'AI автоматически определяет языки и подсчитывает символы по языкам с высокой точностью.',contact:'Contact',contactTitle:'Связаться с разработчиком',contactEmail:'Email *',contactPhone:'Телефон (Необязательно)',contactMessage:'Сообщение *',contactCancel:'Отмена',contactSend:'Отправить сообщение',contactSuccess:'Ваш почтовый клиент откроется. Пожалуйста, отправьте email для завершения вашего запроса.',placeholderMessage:'Введите текст, чтобы увидеть результаты анализа количества символов здесь.'},
+        ar:{title:'عداد الأحرف متعدد اللغات',subtitle:'تحليل النصوص بذكاء خاص باللغة—عد دقيق للكورية والصينية والإنجليزية والمزيد.',paste:'لصق النص',clear:'مسح',rules:'📊 قواعد العد',placeholder:'اكتب أو الصق النص…',hi1:'دقة الذكاء الاصطناعي',hi1s:'عد الأحرف والكلمات والأرقام وعلامات الترقيم الواعي باللغة—مخصص لكل نص.',hi2:'قواعد ذكية',hi2s:'يطبق قواعد مركزة على الكورية أو متعددة اللغات ديناميكياً. مثالي للنصوص ثنائية اللغة.',brand:'عداد الأحرف متعدد اللغات مدعوم بالذكاء الاصطناعي',analysisTool:'محلل النصوص متعدد اللغات',textInputLabel:'AI يكتشف اللغات تلقائياً ويعد الأحرف حسب اللغة بدقة عالية.',contact:'Contact',contactTitle:'اتصل بالمطور',contactEmail:'البريد الإلكتروني *',contactPhone:'الهاتف (اختياري)',contactMessage:'الرسالة *',contactCancel:'إلغاء',contactSend:'إرسال الرسالة',contactSuccess:'سيتم فتح عميل البريد الإلكتروني الخاص بك. يرجى إرسال البريد الإلكتروني لإكمال استفسارك.',placeholderMessage:'أدخل النص لرؤية نتائج تحليل عدد الأحرف هنا.'},
+        fr:{title:'Compteur de caractères multilingue',subtitle:'Analysez les scripts avec une intelligence spécifique à la langue—comptes précis pour le coréen, chinois, anglais et plus.',paste:'Coller le texte',clear:'Effacer',rules:'📊 Règles de comptage',placeholder:'Saisissez ou collez du texte…',hi1:'Précision IA',hi1s:'Comptes conscients de la langue pour caractères, mots, chiffres et ponctuation—adaptés à chaque script.',hi2:'Règles intelligentes',hi2s:'Applique dynamiquement des règles centrées sur le coréen ou multilingues. Parfait pour les scripts bilingues.',brand:'Compteur de caractères multilingue alimenté par IA',analysisTool:'Analyseur de texte multilingue',textInputLabel:'IA détecte automatiquement les langues et compte les caractères par langue avec précision.',contact:'Contact',contactTitle:'Contacter le développeur',contactEmail:'Email *',contactPhone:'Téléphone (Optionnel)',contactMessage:'Message *',contactCancel:'Annuler',contactSend:'Envoyer le message',contactSuccess:'Votre client email s ouvrira. Veuillez envoyer l email pour compléter votre demande.',placeholderMessage:'Entrez du texte pour voir les résultats d analyse du nombre de caractères ici.'},
+        de:{title:'Mehrsprachiger Zeichenzähler',subtitle:'Analysieren Sie Skripte mit sprachspezifischer Intelligenz—genaue Zählungen für Koreanisch, Chinesisch, Englisch und mehr.',paste:'Text einfügen',clear:'Löschen',rules:'📊 Zählregeln',placeholder:'Text eingeben oder einfügen…',hi1:'KI-Präzision',hi1s:'Sprachbewusste Zählungen für Zeichen, Wörter, Ziffern und Interpunktion—angepasst an jedes Skript.',hi2:'Smarte Regeln',hi2s:'Wendet dynamisch koreanisch-fokussierte oder mehrsprachige Regeln an. Perfekt für zweisprachige Skripte.',brand:'KI-gestützter mehrsprachiger Zeichenzähler',analysisTool:'Mehrsprachiger Textanalysator',textInputLabel:'KI erkennt automatisch Sprachen und zählt Zeichen nach Sprache mit hoher Präzision.',contact:'Contact',contactTitle:'Entwickler kontaktieren',contactEmail:'E-Mail *',contactPhone:'Telefon (Optional)',contactMessage:'Nachricht *',contactCancel:'Abbrechen',contactSend:'Nachricht senden',contactSuccess:'Ihr E-Mail-Client wird geöffnet. Bitte senden Sie die E-Mail, um Ihre Anfrage abzuschließen.',placeholderMessage:'Geben Sie Text ein, um Zeichenzählungsanalyseergebnisse hier zu sehen.'},
+        es:{title:'Contador de caracteres multilingüe',subtitle:'Analiza scripts con inteligencia específica del idioma—conteos precisos para coreano, chino, inglés y más.',paste:'Pegar texto',clear:'Borrar',rules:'📊 Reglas de conteo',placeholder:'Escribe o pega texto…',hi1:'Precisión IA',hi1s:'Conteos conscientes del idioma para caracteres, palabras, dígitos y puntuación—adaptados a cada script.',hi2:'Reglas inteligentes',hi2s:'Aplica dinámicamente reglas centradas en coreano o multilingües. Perfecto para scripts bilingües.',brand:'Contador de caracteres multilingüe impulsado por IA',analysisTool:'Analizador de texto multilingüe',textInputLabel:'IA detecta automáticamente idiomas y cuenta caracteres por idioma con precisión.',contact:'Contact',contactTitle:'Contactar desarrollador',contactEmail:'Email *',contactPhone:'Teléfono (Opcional)',contactMessage:'Mensaje *',contactCancel:'Cancelar',contactSend:'Enviar mensaje',contactSuccess:'Su cliente de correo se abrirá. Por favor envíe el correo para completar su consulta.',placeholderMessage:'Ingrese texto para ver los resultados del análisis de conteo de caracteres aquí.'},
+        pt:{title:'Contador de caracteres multilíngue',subtitle:'Analise scripts com inteligência específica da linguagem—contagens precisas para coreano, chinês, inglês e mais.',paste:'Colar texto',clear:'Limpar',rules:'📊 Regras de contagem',placeholder:'Digite ou cole o texto…',hi1:'Precisão IA',hi1s:'Contagens conscientes da linguagem para caracteres, palavras, dígitos e pontuação—adaptadas a cada script.',hi2:'Regras inteligentes',hi2s:'Aplica dinamicamente regras focadas no coreano ou multilíngues. Perfeito para scripts bilíngues.',brand:'Contador de caracteres multilíngue alimentado por IA',analysisTool:'Analisador de texto multilíngue',textInputLabel:'IA detecta automaticamente idiomas e conta caracteres por idioma com precisão.',contact:'Contact',contactTitle:'Contatar desenvolvedor',contactEmail:'Email *',contactPhone:'Telefone (Opcional)',contactMessage:'Mensagem *',contactCancel:'Cancelar',contactSend:'Enviar mensagem',contactSuccess:'Seu cliente de email será aberto. Por favor envie o email para completar sua consulta.',placeholderMessage:'Digite texto para ver os resultados da análise de contagem de caracteres aqui.'}
       },
       labels: {
         en:{scriptChars:n=>`${n} characters`,enLetters:'English letters',enWords:'English words',digits:'Digits',punct:'Punctuation',total:'Total (no spaces)',noPunct:'no punctuation'},
@@ -959,10 +1074,10 @@
 
       const resultElement = document.getElementById('result');
       if (stats.total === 0) {
+        const L = i18n.ui[stats.uiLang] || i18n.ui.en;
         resultElement.innerHTML = `
           <div style="color: var(--muted); font-style: italic; text-align: center;">
-            텍스트를 입력하면 글자수 분석 결과가 여기에 표시됩니다.<br>
-            Enter text to see character count analysis results here.
+            ${L.placeholderMessage || 'Enter text to see character count analysis results here.'}
           </div>
         `;
       } else {
@@ -1011,10 +1126,11 @@
       trackUserAction('clear_button_clicked', { label: 'clear_button' });
       const el = document.getElementById('textInput');
       el.value = '';
+      const uiLang = document.getElementById('lang').value;
+      const L = i18n.ui[uiLang] || i18n.ui.en;
       document.getElementById('result').innerHTML = `
         <div style="color: var(--muted); font-style: italic; text-align: center;">
-          텍스트를 입력하면 글자수 분석 결과가 여기에 표시됩니다.<br>
-          Enter text to see character count analysis results here.
+          ${L.placeholderMessage || 'Enter text to see character count analysis results here.'}
         </div>
       `;
       el.focus();
@@ -1040,19 +1156,33 @@
     function onInputImmediate() {
       const text = document.getElementById('textInput').value;
       const resultElement = document.getElementById('result');
+      const uiLang = document.getElementById('lang').value;
+      const L = i18n.ui[uiLang] || i18n.ui.en;
       
       if (text.trim().length === 0) {
         resultElement.innerHTML = `
           <div style="color: var(--muted); font-style: italic; text-align: center;">
-            텍스트를 입력하면 글자수 분석 결과가 여기에 표시됩니다.<br>
-            Enter text to see character count analysis results here.
+            ${L.placeholderMessage || 'Enter text to see character count analysis results here.'}
           </div>
         `;
       } else {
         // Show loading state
+        const loadingText = uiLang === 'ko' ? '분석 중...' : 
+                           uiLang === 'zh-CN' ? '分析中...' :
+                           uiLang === 'zh-TW' ? '分析中...' :
+                           uiLang === 'ja' ? '分析中...' :
+                           uiLang === 'th' ? 'กำลังวิเคราะห์...' :
+                           uiLang === 'vi' ? 'Đang phân tích...' :
+                           uiLang === 'ru' ? 'Анализ...' :
+                           uiLang === 'ar' ? 'جاري التحليل...' :
+                           uiLang === 'fr' ? 'Analyse en cours...' :
+                           uiLang === 'de' ? 'Analysiere...' :
+                           uiLang === 'es' ? 'Analizando...' :
+                           uiLang === 'pt' ? 'Analisando...' :
+                           'Analyzing...';
         resultElement.innerHTML = `
           <div style="color: var(--accent); text-align: center; font-weight: 500;">
-            분석 중... / Analyzing...
+            ${loadingText}
           </div>
         `;
       }
@@ -1124,10 +1254,10 @@
       // Initialize result area with placeholder message
       const resultElement = document.getElementById('result');
       if (resultElement && !resultElement.innerHTML.trim()) {
+        const L = i18n.ui[defaultLang] || i18n.ui.en;
         resultElement.innerHTML = `
           <div style="color: var(--muted); font-style: italic; text-align: center;">
-            텍스트를 입력하면 글자수 분석 결과가 여기에 표시됩니다.<br>
-            Enter text to see character count analysis results here.
+            ${L.placeholderMessage || 'Enter text to see character count analysis results here.'}
           </div>
         `;
       }
