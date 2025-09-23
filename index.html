@@ -381,7 +381,12 @@
       .hero-feature-desc { font-size: 0.9em; }
       
       .panel { padding: 20px; }
-      .row { flex-direction: column; gap: 12px; }
+      .row { 
+        flex-direction: row !important; 
+        gap: 12px !important; 
+        justify-content: space-between !important;
+        align-items: center !important;
+      }
       .primary { padding: 14px 20px; font-size: 1em; }
       
       textarea { 
@@ -419,6 +424,43 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+      }
+      
+      /* Mobile: Arrange paste and rules buttons side by side */
+      .panel .row {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 12px !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      .panel .row button {
+        flex: 1 !important;
+        max-width: 50% !important;
+      }
+      
+      /* Mobile title placement - Show AI-Powered text below About/Contact */
+      .nav-center {
+        display: none !important;
+      }
+      
+      .brand-text {
+        display: none !important;
+      }
+      
+      /* Add mobile title after nav */
+      .nav::after {
+        content: "AI-powered Multilingual Character Counter";
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 1.1em;
+        font-weight: 700;
+        color: var(--text);
+        margin-top: 16px;
+        padding: 0 16px;
+        box-sizing: border-box;
       }
       
       /* Mobile button optimizations - Unified sizes */
@@ -492,6 +534,36 @@
         margin-left: 0px; 
       }
       .nav-center { display: none; }
+      .brand-text { display: none !important; }
+      
+      /* Add mobile title after nav */
+      .nav::after {
+        content: "AI-powered Multilingual Character Counter";
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 1em;
+        font-weight: 700;
+        color: var(--text);
+        margin-top: 12px;
+        padding: 0 12px;
+        box-sizing: border-box;
+      }
+      
+      /* Mobile: Arrange paste and rules buttons side by side */
+      .panel .row {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 8px !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      .panel .row button {
+        flex: 1 !important;
+        max-width: 50% !important;
+      }
+      
       .controls { 
         justify-content: flex-end; 
         margin-left: auto; 
@@ -561,8 +633,37 @@
       .brand-text { 
         font-size: 0.6em; 
         max-width: 80px; 
-        display: none;
+        display: none !important;
       }
+      
+      /* Add mobile title after nav */
+      .nav::after {
+        content: "AI-powered Multilingual Character Counter";
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 0.9em;
+        font-weight: 700;
+        color: var(--text);
+        margin-top: 10px;
+        padding: 0 10px;
+        box-sizing: border-box;
+      }
+      
+      /* Mobile: Arrange paste and rules buttons side by side */
+      .panel .row {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 6px !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      .panel .row button {
+        flex: 1 !important;
+        max-width: 50% !important;
+      }
+      
       .brand-logo { 
         height: 24px; 
       }
