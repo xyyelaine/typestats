@@ -340,7 +340,8 @@
         align-items: center; 
         gap: 8px; 
         flex-wrap: nowrap;
-        overflow: hidden;
+        overflow: visible;
+        min-height: 60px;
       }
       .brand { 
         justify-content: flex-start; 
@@ -368,6 +369,8 @@
         gap: 6px;
         display: flex;
         align-items: center;
+        padding: 0 4px;
+        min-width: 0;
       }
       
       .container { padding: 16px; }
@@ -474,6 +477,14 @@
         justify-content: center !important;
       }
       
+      /* Language selector specific styling */
+      #lang {
+        min-width: 80px !important;
+        max-width: 100px !important;
+        white-space: nowrap !important;
+        overflow: visible !important;
+      }
+      
       .about-link {
         font-size: 0.85em !important;
         margin-right: 8px !important;
@@ -516,6 +527,8 @@
         align-items: center; 
         gap: 6px; 
         flex-wrap: nowrap;
+        overflow: visible;
+        min-height: 56px;
       }
       .brand { 
         justify-content: flex-start; 
@@ -569,6 +582,8 @@
         margin-left: auto; 
         flex-shrink: 0;
         gap: 4px;
+        padding: 0 2px;
+        min-width: 0;
       }
       .container { padding: 12px; }
       .hero-card { padding: 16px; }
@@ -629,6 +644,8 @@
       .nav { 
         gap: 4px; 
         padding: 8px 10px;
+        overflow: visible;
+        min-height: 52px;
       }
       .brand-text { 
         font-size: 0.6em; 
@@ -669,6 +686,8 @@
       }
       .controls { 
         gap: 3px;
+        padding: 0 1px;
+        min-width: 0;
       }
       .controls button, .controls select {
         padding: 10px 14px !important;
