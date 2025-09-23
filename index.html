@@ -421,7 +421,7 @@
       }
       
       .stats { 
-        grid-template-columns: 1fr; 
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
         gap: 16px; 
         margin-top: 20px; 
       }
@@ -478,7 +478,10 @@
         font-size: 16px;
       }
       
-      .stats { gap: 12px; }
+      .stats { 
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+        gap: 12px; 
+      }
       .card { padding: 14px; }
       .value { font-size: 1.1em; }
       .label { font-size: 0.85em; }
@@ -531,6 +534,11 @@
       .rules-btn {
         font-size: 0.7em;
         padding: 5px 8px !important;
+      }
+      
+      .stats { 
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+        gap: 8px; 
       }
     }
     
