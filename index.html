@@ -550,28 +550,91 @@
       color: #1d4ed8 !important;
     }
     
-    /* Force grid layout for statistics */
-    #result .stats {
+    /* Force grid layout for statistics - Multiple approaches */
+    #result .stats,
+    div.stats,
+    .stats {
       display: grid !important;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+      grid-auto-flow: row !important;
+      width: 100% !important;
+    }
+    
+    /* Alternative flexbox approach as fallback */
+    #result .stats.flex-fallback {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 12px !important;
+    }
+    
+    #result .stats.flex-fallback .card {
+      flex: 1 1 200px !important;
+      min-width: 200px !important;
+      max-width: calc(50% - 6px) !important;
     }
     
     @media (max-width: 768px) {
-      #result .stats {
+      #result .stats,
+      div.stats,
+      .stats {
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+      }
+      #result .stats.flex-fallback .card {
+        flex: 1 1 180px !important;
+        min-width: 180px !important;
       }
     }
     
     @media (max-width: 480px) {
-      #result .stats {
+      #result .stats,
+      div.stats,
+      .stats {
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+      }
+      #result .stats.flex-fallback .card {
+        flex: 1 1 160px !important;
+        min-width: 160px !important;
       }
     }
     
     @media (max-width: 360px) {
-      #result .stats {
+      #result .stats,
+      div.stats,
+      .stats {
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
       }
+      #result .stats.flex-fallback .card {
+        flex: 1 1 140px !important;
+        min-width: 140px !important;
+      }
+    }
+    
+    /* Ultimate grid layout enforcement */
+    #result div[class*="stats"],
+    #result .stats,
+    div.stats,
+    .stats,
+    [class*="stats"] {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+      grid-auto-flow: row !important;
+      width: 100% !important;
+      gap: 12px !important;
+    }
+    
+    /* Override any conflicting styles */
+    #result * {
+      box-sizing: border-box !important;
+    }
+    
+    #result .stats * {
+      display: block !important;
+    }
+    
+    #result .stats .card {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
     }
   </style>
   
@@ -1118,7 +1181,7 @@
         `;
       } else {
         resultElement.innerHTML = `
-          <div class="stats">
+          <div class="stats" style="display: grid !important; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important; gap: 12px !important; width: 100% !important;">
             ${scriptCards}
             <div class="card"><div class="label">${englishLabel}</div><div class="value">${stats.englishDisplay.toLocaleString()}</div></div>
             <div class="card"><div class="label">${L.digits}</div><div class="value">${stats.digits.toLocaleString()}</div></div>
@@ -1130,6 +1193,17 @@
             </div>
           </div>
         `;
+        
+        // Force grid layout after rendering
+        setTimeout(() => {
+          const statsElement = resultElement.querySelector('.stats');
+          if (statsElement) {
+            statsElement.style.display = 'grid';
+            statsElement.style.gridTemplateColumns = 'repeat(auto-fit, minmax(200px, 1fr))';
+            statsElement.style.gap = '12px';
+            statsElement.style.width = '100%';
+          }
+        }, 10);
       }
     }
 
