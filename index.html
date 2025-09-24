@@ -1117,7 +1117,9 @@
         .replace(/\r\n?/g, '\n')
         .replace(/^\s*\n+/, '')
         .replace(/\n{3,}/g, '\n\n')
-        .replace(/\s+$/g, '');
+        .replace(/\s+$/g, '')
+        // Remove leading and trailing quotes (for Google Sheets paste)
+        .replace(/^["']+|["']+$/g, '');
     }
 
     // i18n (UI + labels + script names)
