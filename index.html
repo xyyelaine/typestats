@@ -1118,8 +1118,9 @@
         .replace(/^\s*\n+/, '')
         .replace(/\n{3,}/g, '\n\n')
         .replace(/\s+$/g, '')
-        // Remove leading and trailing quotes (for Google Sheets paste)
-        .replace(/^["']+|["']+$/g, '')
+        // Remove quotes from each cell value (for Google Sheets paste)
+        // This handles both single and double quotes at the start/end of each line
+        .replace(/^["']+|["']+$/gm, '')
         // Remove Excel/Google Sheets formula indicators
         .replace(/^=/, '')
         // Remove tab characters (often from spreadsheet paste)
