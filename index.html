@@ -1111,7 +1111,7 @@
       hebr: /\p{Script=Hebrew}/gu
     };
 
-    // Normalize pasted text (top and tail cleanup)
+    // Normalize pasted text (paste values only - remove formatting and formulas)
     function normalizePasted(text) {
       return text
         .replace(/\r\n?/g, '\n')
@@ -1119,7 +1119,15 @@
         .replace(/\n{3,}/g, '\n\n')
         .replace(/\s+$/g, '')
         // Remove leading and trailing quotes (for Google Sheets paste)
-        .replace(/^["']+|["']+$/g, '');
+        .replace(/^["']+|["']+$/g, '')
+        // Remove Excel/Google Sheets formula indicators
+        .replace(/^=/, '')
+        // Remove tab characters (often from spreadsheet paste)
+        .replace(/\t/g, ' ')
+        // Clean up multiple spaces
+        .replace(/[ \t]+/g, ' ')
+        // Remove any remaining control characters except newlines
+        .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
     }
 
     // i18n (UI + labels + script names)
